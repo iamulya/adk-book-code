@@ -3,8 +3,8 @@
 from google.adk.agents import Agent, ParallelAgent, BaseAgent, InvocationContext 
 from google.adk.events.event import Event
 from google.adk.runners import InMemoryRunner; from google.genai.types import Content,Part; import asyncio
-sentiment_analyzer_agent=Agent(name="sentiment_analyzer",model="gemini-1.5-flash-latest",instruction="Analyze sentiment. Output: positive, negative, or neutral.")
-keyword_extractor_agent=Agent(name="keyword_extractor",model="gemini-1.5-flash-latest",instruction="Extract up to 3 keywords. Output: comma-separated list.")
+sentiment_analyzer_agent=Agent(name="sentiment_analyzer",model="gemini-2.0-flash",instruction="Analyze sentiment. Output: positive, negative, or neutral.")
+keyword_extractor_agent=Agent(name="keyword_extractor",model="gemini-2.0-flash",instruction="Extract up to 3 keywords. Output: comma-separated list.")
 text_analysis_parallel_tasks=ParallelAgent(name="parallel_text_analyzer",sub_agents=[sentiment_analyzer_agent,keyword_extractor_agent])
 class AnalysisOrchestrator(BaseAgent): # Changed to BaseAgent for custom _run_async_impl
     async def _run_async_impl(self, ctx: InvocationContext):

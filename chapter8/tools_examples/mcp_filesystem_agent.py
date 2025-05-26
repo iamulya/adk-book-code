@@ -20,7 +20,7 @@ except ImportError:
 mcp_agent = None
 if mcp_fs_toolset:
     mcp_agent = Agent(
-        name="filesystem_navigator", model="gemini-1.5-flash-latest",
+        name="filesystem_navigator", model="gemini-2.0-flash",
         instruction="Interact with local filesystem using tools (listFiles, readFile, writeFile).",
         tools=[mcp_fs_toolset]
     )

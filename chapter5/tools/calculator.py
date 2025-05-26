@@ -12,7 +12,7 @@ def simple_calculator(operand1: float, operand2: float, operation: str) -> Union
     else: return f"Error: Invalid operation '{operation}'."
 calculator_tool = FunctionTool(func=simple_calculator)
 calculator_agent = Agent(
-    name="math_wiz", model="gemini-1.5-flash-latest",
+    name="math_wiz", model="gemini-2.0-flash",
     instruction="You are a helpful assistant that can perform basic calculations...",
     tools=[calculator_tool]
 )

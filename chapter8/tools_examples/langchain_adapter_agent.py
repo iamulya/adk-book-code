@@ -13,7 +13,7 @@ try:
         description="A wrapper for DuckDuckGo Search."
     )
     langchain_integrated_agent = Agent(
-        name="langchain_search_user", model="gemini-1.5-flash-latest",
+        name="langchain_search_user", model="gemini-2.0-flash",
         instruction="You can search the internet using DuckDuckGo.",
         tools=[adk_wrapped_duckduckgo]
     )

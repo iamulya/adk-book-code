@@ -28,7 +28,7 @@ def my_after_model_cb(context: CallbackContext, response: LlmResponse) -> Option
     response.custom_metadata = {"source": "after_model_cb_modification"}
     return response
 callback_demo_agent = Agent(
-    name="callback_demo_agent", model="gemini-1.5-flash-latest",
+    name="callback_demo_agent", model="gemini-2.0-flash",
     instruction="You are an echo agent. Repeat the user's message.",
     description="Demonstrates agent and model callbacks.",
     before_agent_callback=my_before_agent_cb,

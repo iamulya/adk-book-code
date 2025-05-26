@@ -10,20 +10,20 @@ def gather_user_data(name: str, email: str, tool_context: ToolContext) -> dict:
     tool_context.state["user_name_collected"]=name; tool_context.state["user_email_collected"]=email
     return {"status":"success", "message":f"Data for {name} collected."}
 gather_data_tool=FunctionTool(gather_user_data)
-data_collection_agent=Agent(name="data_collector",model="gemini-1.5-flash-latest",instruction="Collect user name/email using 'gather_user_data' tool.",tools=[gather_data_tool])
+data_collection_agent=Agent(name="data_collector",model="gemini-2.0-flash",instruction="Collect user name/email using 'gather_user_data' tool.",tools=[gather_data_tool])
 def validate_email_format(email: str, tool_context: ToolContext) -> dict:
     """Validates email format."""
     if re.match(r"[^@]+@[^@]+\.[^@]+", email): tool_context.state["email_validated"]=True; return {"is_valid":True,"email":email}
     else: tool_context.state["email_validated"]=False; return {"is_valid":False,"email":email,"error":"Invalid email."}
 validate_email_tool=FunctionTool(validate_email_format)
-email_validation_agent=Agent(name="email_validator",model="gemini-1.5-flash-latest",instruction="Validate email from `state['user_email_collected']` using 'validate_email_format' tool.",tools=[validate_email_tool])
+email_validation_agent=Agent(name="email_validator",model="gemini-2.0-flash",instruction="Validate email from `state['user_email_collected']` using 'validate_email_format' tool.",tools=[validate_email_tool])
 def send_welcome_email(tool_context: ToolContext) -> str:
     """Simulates sending welcome email if validated."""
     if tool_context.state.get("email_validated") and tool_context.state.get("user_name_collected"):
         return f"Welcome email sent to {tool_context.state['user_name_collected']} at {tool_context.state['user_email_collected']}."
     return "Could not send: email not validated or name missing."
 send_email_tool=FunctionTool(send_welcome_email)
-welcome_email_agent=Agent(name="welcome_emailer",model="gemini-1.5-flash-latest",instruction="If `state['email_validated']` is true, use 'send_welcome_email' tool.",tools=[send_email_tool])
+welcome_email_agent=Agent(name="welcome_emailer",model="gemini-2.0-flash",instruction="If `state['email_validated']` is true, use 'send_welcome_email' tool.",tools=[send_email_tool])
 user_onboarding_pipeline=SequentialAgent(name="user_onboarding_orchestrator",sub_agents=[data_collection_agent,email_validation_agent,welcome_email_agent])
 if __name__=="__main__":
     runner=InMemoryRunner(agent=user_onboarding_pipeline,app_name="OnboardingApp")

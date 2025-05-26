@@ -2,12 +2,12 @@
 # multi_agent_systems/hierarchical_structure.py
 from google.adk.agents import Agent 
 research_sub_agent = Agent(
-    name="researcher", model="gemini-1.5-flash-latest",
+    name="researcher", model="gemini-2.0-flash",
     instruction="You are a research specialist. Find relevant information using search tools.",
     description="Finds information on a given topic.",
 )
 writer_sub_agent = Agent(
-    name="writer", model="gemini-1.5-flash-latest",
+    name="writer", model="gemini-2.0-flash",
     instruction="You are a skilled writer. Synthesize information into a coherent summary.",
     description="Writes summaries or reports based on provided information."
 )

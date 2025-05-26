@@ -11,7 +11,7 @@ def get_and_increment_counter(tool_context: ToolContext) -> str:
     return f"Counter is now: {session_counter}. Invocation: {tool_context.invocation_id}, FuncCall: {tool_context.function_call_id}"
 counter_tool = FunctionTool(func=get_and_increment_counter)
 stateful_agent = Agent(
-    name="stateful_counter_agent", model="gemini-1.5-flash-latest",
+    name="stateful_counter_agent", model="gemini-2.0-flash",
     instruction="You have a tool to get and increment a counter. Use it when asked.",
     tools=[counter_tool]
 )

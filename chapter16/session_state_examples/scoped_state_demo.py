@@ -14,7 +14,7 @@ def manage_preferences(tool_context: ToolContext, theme: str = None, language: s
     tool_context.state[State.TEMP_PREFIX + "last_tool_name"]="manage_preferences"
     return {"status":"Prefs updated.","changes":changes, "user_theme":tool_context.state.get(State.USER_PREFIX+"theme"), "app_lang":tool_context.state.get(State.APP_PREFIX+"default_language")}
 preference_tool=FunctionTool(manage_preferences)
-state_demo_agent=Agent(name="pref_mgr",model="gemini-1.5-flash-latest",instruction="Manage prefs with 'manage_preferences' tool.",tools=[preference_tool])
+state_demo_agent=Agent(name="pref_mgr",model="gemini-2.0-flash",instruction="Manage prefs with 'manage_preferences' tool.",tools=[preference_tool])
 if __name__=="__main__":
     runner=InMemoryRunner(agent=state_demo_agent,app_name="PrefsDemo")
     u1="user_alpha"; u2="user_beta"; s1u1="s1_alpha"; s2u1="s2_alpha"; s1u2="s1_beta"

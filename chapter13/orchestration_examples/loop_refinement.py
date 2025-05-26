@@ -11,7 +11,7 @@ def check_draft_quality(draft: str, tool_context: ToolContext) -> dict:
         exit_loop(tool_context); return {"quality":"good","feedback":"Looks good!" if "final" in draft.lower() else "Max iterations.","action":"exit"}
     else: print(f"    [QualityCheckTool] Needs work (iter {iteration})."); return {"quality":"poor","feedback":"Needs more detail.","action":"refine"}
 quality_check_tool=FunctionTool(check_draft_quality)
-drafting_agent=Agent(name="draft_refiner",model="gemini-1.5-flash-latest",instruction="Draft/refine doc based on `state['current_draft']`. Use 'check_draft_quality' tool. If tool says refine, use feedback.",tools=[quality_check_tool])
+drafting_agent=Agent(name="draft_refiner",model="gemini-2.0-flash",instruction="Draft/refine doc based on `state['current_draft']`. Use 'check_draft_quality' tool. If tool says refine, use feedback.",tools=[quality_check_tool])
 iterative_refinement_loop=LoopAgent(name="doc_refinement_loop",sub_agents=[drafting_agent],max_iterations=5)
 if __name__=="__main__":
     runner=InMemoryRunner(agent=iterative_refinement_loop,app_name="LoopRefineApp")

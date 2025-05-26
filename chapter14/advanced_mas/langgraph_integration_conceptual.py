@@ -27,7 +27,7 @@ if LANGGRAPH_SETUP_SUCCESS and runnable_graph:
 if __name__ == "__main__":
     if not langgraph_adk_agent: print("LG ADK Agent not initialized.")
     else:
-        orchestrator=AdkAgent(name="main_orch",model="gemini-1.5-flash-latest",instruction="Delegate to LG agent.",sub_agents=[langgraph_adk_agent])
+        orchestrator=AdkAgent(name="main_orch",model="gemini-2.0-flash",instruction="Delegate to LG agent.",sub_agents=[langgraph_adk_agent])
         runner=InMemoryRunner(agent=orchestrator,app_name="LangGraphADKApp"); prompts=["Hello LG agent.","Call conceptual tool."]; session_id_lg="lg_s1"
         async def main():
             for i,prompt_text in enumerate(prompts):

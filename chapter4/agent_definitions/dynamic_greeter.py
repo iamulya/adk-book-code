@@ -1,8 +1,13 @@
 
 # agent_definitions/dynamic_greeter.py
+import os
 from google.adk.agents import Agent
 from google.adk.agents.readonly_context import ReadonlyContext 
 from datetime import datetime
+from ...utils import load_environment_variables
+
+load_environment_variables()
+
 def get_time_based_greeting_instruction(context: ReadonlyContext) -> str:
     current_hour = datetime.now().hour
     user_name = context.state.get("user:user_name", "there") 
@@ -10,11 +15,13 @@ def get_time_based_greeting_instruction(context: ReadonlyContext) -> str:
     elif 12 <= current_hour < 18: greeting_time = "afternoon"
     else: greeting_time = "evening"
     return f"You are a cheerful assistant. Greet the user '{user_name}' and wish them a good {greeting_time}. Then, ask how you can help."
+
 dynamic_greeter_agent = Agent(
-    name="dynamic_greeter", model="gemini-1.5-flash-latest",
+    name="dynamic_greeter", model="gemini-2.0-flash",
     instruction=get_time_based_greeting_instruction, 
     description="Greets the user dynamically based on the time of day and their name."
 )
+
 if __name__ == "__main__":
     from google.adk.runners import InMemoryRunner
     from google.genai.types import Content, Part

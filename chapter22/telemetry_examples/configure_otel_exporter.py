@@ -12,7 +12,7 @@ def setup_otel_sdk(service_name="adk-my-agent-app"):
     provider.add_span_processor(BatchSpanProcessor(console_exporter))
     trace.set_tracer_provider(provider); print("OTel SDK configured with ConsoleExporter.")
 # setup_otel_sdk() # User uncomments to enable
-simple_agent_for_telemetry = Agent(name="telemetry_observer_agent",model="gemini-1.5-flash-latest",instruction="Explain telemetry.")
+simple_agent_for_telemetry = Agent(name="telemetry_observer_agent",model="gemini-2.0-flash",instruction="Explain telemetry.")
 if __name__ == "__main__":
     print("Run with `adk web .` or uncomment setup_otel_sdk() for console traces.")
     runner = InMemoryRunner(agent=simple_agent_for_telemetry, app_name="TelemetryApp")

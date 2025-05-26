@@ -15,7 +15,7 @@ try:
             description=crewai_serper_tool_instance.description or "A tool to search Google using Serper API."
         )
         crewai_integrated_agent = Agent(
-            name="crewai_search_user", model="gemini-1.5-flash-latest",
+            name="crewai_search_user", model="gemini-2.0-flash",
             instruction="You can search Google using the SerperDevTool.",
             tools=[adk_wrapped_serper]
         )
