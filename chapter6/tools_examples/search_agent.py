@@ -1,1 +1,57 @@
+# tools_examples/search_agent.py
+from google.adk.agents import Agent
+from google.adk.tools import google_search # Import the pre-built tool
+from google.adk.runners import InMemoryRunner
+from google.genai.types import Content, Part
+from ...utils import load_environment_variables
 
+load_environment_variables()
+
+search_savvy_agent = Agent(
+    name="search_savvy_agent",
+    model="gemini-2.0-flash", 
+    instruction="You are a helpful research assistant. Use Google Search when you need to find current information or verify facts.",
+    tools=[google_search] # Add the tool instance
+)
+
+if __name__ == "__main__":
+    runner = InMemoryRunner(agent=search_savvy_agent, app_name="SearchApp")
+    prompts = [
+        "What is the latest news about the Mars rover Perseverance?",
+        "Who won the latest Formula 1 race?",
+        "What is the capital of France?" 
+    ]
+
+    session_id = "search_session"
+    user_id = "search_user"
+
+    import asyncio
+    # --- Create the session before the loop ---
+    print(f"Creating session: {session_id} for user: {user_id} on app: {runner.app_name}")
+    # Since session_service.create_session is async, we need to run it in an event loop
+    try:
+        asyncio.run(runner.session_service.create_session(
+            app_name=runner.app_name,
+            user_id=user_id,
+            session_id=session_id,
+        ))
+        print("Session created successfully.")
+    except Exception as e:
+        print(f"Error creating session: {e}")
+        exit()
+    # --- Session creation done ---
+
+    for prompt_text in prompts:
+        print(f"\\nYOU: {prompt_text}")
+        user_message = Content(parts=[Part(text=prompt_text)], role="user")
+
+        print("ASSISTANT: ", end="", flush=True)
+        for event in runner.run(user_id=user_id, session_id=session_id, new_message=user_message):
+            if event.content and event.content.parts:
+                for part in event.content.parts:
+                    if part.text:
+                        print(part.text, end="", flush=True)
+                    # With search, grounding metadata might be present
+                    if event.grounding_metadata and event.grounding_metadata.web_search_queries:
+                        print(f"\\n  (Searched for: {event.grounding_metadata.web_search_queries})", end="")
+        print()

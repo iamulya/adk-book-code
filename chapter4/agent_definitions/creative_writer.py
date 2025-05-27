@@ -9,8 +9,8 @@ from ...utils import load_environment_variables
 load_environment_variables()
 
 custom_safety_settings = [
-    SafetySetting(category=HarmCategory.HARM_CATEGORY_HARASSMENT, threshold=HarmBlockThreshold.BLOCK_ONLY_HIGH),
-    SafetySetting(category=HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold=HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE),
+    SafetySetting(category=HarmCategory.HARM_CATEGORY_HARASSMENT, threshold=HarmBlockThreshold.BLOCK_NONE),
+    SafetySetting(category=HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold=HarmBlockThreshold.BLOCK_NONE),
 ]
 
 creative_writer_agent = Agent(
@@ -18,8 +18,8 @@ creative_writer_agent = Agent(
     instruction="You are a creative writer. Write a short, imaginative story based on the user's prompt.",
     description="Generates short creative stories.",
     generate_content_config=GenerateContentConfig(
-        temperature=0.9, top_p=0.95, top_k=40, max_output_tokens=512, safety_settings=custom_safety_settings
-    )
+        temperature=0.9, top_p=0.95, top_k=40, max_output_tokens=1024,
+        safety_settings=custom_safety_settings)
 )
 if __name__ == "__main__":
     from google.adk.runners import InMemoryRunner
@@ -44,7 +44,7 @@ if __name__ == "__main__":
         exit()
     # --- Session creation done ---
 
-    user_prompt = Content(parts=[Part(text="A brave squirrel on a quest to find the legendary golden acorn.")])
+    user_prompt = Content(parts=[Part(text="A brave squirrel on a quest to find the legendary golden acorn.")], role="user")
     print("Creative Writer Story:")
     
     for event in runner.run(user_id=current_user_id, session_id=current_session_id, new_message=user_prompt):
