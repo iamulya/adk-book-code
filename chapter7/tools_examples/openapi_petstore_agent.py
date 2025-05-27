@@ -95,11 +95,11 @@ if __name__ == "__main__":
 
     async def main(): # Using async for runner.run
         for prompt_text in prompts:
-            print(f"\\nYOU: {prompt_text}")
+            print(f"\nYOU: {prompt_text}")
             user_message = Content(parts=[Part(text=prompt_text)], role="user")
             print("PETSTORE_MANAGER: ", end="", flush=True)
             # In a real scenario, the Petstore API would be called.
-            # Since petstore.swagger.io is a live mock, these calls might actually work!
+            # Since petstore.swagger.io is a live mock, these calls will actually work!
             for event in runner.run(user_id=user_id, session_id=session_id, new_message=user_message):
                 if event.content and event.content.parts:
                     for part in event.content.parts:
