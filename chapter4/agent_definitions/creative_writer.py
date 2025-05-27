@@ -1,10 +1,8 @@
 
 # agent_definitions/creative_writer.py
-import asyncio
-import os
 from google.adk.agents import Agent
 from google.genai.types import GenerateContentConfig, SafetySetting, HarmCategory, HarmBlockThreshold
-from ...utils import load_environment_variables
+from ...utils import load_environment_variables, create_session
 
 load_environment_variables()
 
@@ -29,20 +27,7 @@ if __name__ == "__main__":
     current_user_id = "creative_writer_user"
     runner = InMemoryRunner(agent=creative_writer_agent, app_name="CreativeApp")
     
-     # --- Create the session before the loop ---
-    print(f"Creating session: {current_session_id} for user: {current_user_id} on app: {runner.app_name}")
-    # Since session_service.create_session is async, we need to run it in an event loop
-    try:
-        asyncio.run(runner.session_service.create_session(
-            app_name=runner.app_name,
-            user_id=current_user_id,
-            session_id=current_session_id,
-        ))
-        print("Session created successfully.")
-    except Exception as e:
-        print(f"Error creating session: {e}")
-        exit()
-    # --- Session creation done ---
+    create_session(runner, current_session_id, current_user_id)
 
     user_prompt = Content(parts=[Part(text="A brave squirrel on a quest to find the legendary golden acorn.")], role="user")
     print("Creative Writer Story:")

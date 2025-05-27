@@ -1,13 +1,12 @@
 
 # tools/calculator.py
-import asyncio
 from google.adk.tools import FunctionTool
 from google.adk.agents import Agent
 from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part
 from typing import Union 
 
-from ...utils import load_environment_variables
+from ...utils import load_environment_variables, create_session
 
 load_environment_variables()
 
@@ -56,20 +55,7 @@ if __name__ == "__main__":
     user_id="calc_user"
     session_id="s_calc"
     
-    # --- Create the session before the loop ---
-    print(f"Creating session: {session_id} for user: {user_id} on app: {runner.app_name}")
-    # Since session_service.create_session is async, we need to run it in an event loop
-    try:
-        asyncio.run(runner.session_service.create_session(
-            app_name=runner.app_name,
-            user_id=user_id,
-            session_id=session_id,
-        ))
-        print("Session created successfully.")
-    except Exception as e:
-        print(f"Error creating session: {e}")
-        exit()
-    # --- Session creation done ---
+    create_session(runner, session_id, user_id)
     
     for prompt_text in prompts:
         print(f"\nYOU: {prompt_text}")
@@ -79,4 +65,3 @@ if __name__ == "__main__":
             if event.content and event.content.parts and event.content.parts[0].text:
                  print(event.content.parts[0].text, end="")
         print()
-

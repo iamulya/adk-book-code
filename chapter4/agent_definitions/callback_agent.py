@@ -1,6 +1,5 @@
 
 # agent_definitions/callback_agent.py
-import asyncio
 from google.adk.agents import Agent
 from google.adk.agents.callback_context import CallbackContext
 from google.adk.models.llm_request import LlmRequest
@@ -12,7 +11,7 @@ import logging
 logging.basicConfig(level=logging.INFO) 
 logger = logging.getLogger(__name__)
 
-from ...utils import load_environment_variables
+from ...utils import load_environment_variables, create_session
 
 load_environment_variables()
 
@@ -52,20 +51,7 @@ if __name__ == "__main__":
     user_id="cb_user"
     session_id="s_normal"
     
-    # --- Create the session before the loop ---
-    print(f"Creating session: {session_id} for user: {user_id} on app: {runner.app_name}")
-    # Since session_service.create_session is async, we need to run it in an event loop
-    try:
-        asyncio.run(runner.session_service.create_session(
-            app_name=runner.app_name,
-            user_id=user_id,
-            session_id=session_id,
-        ))
-        print("Session created successfully.")
-    except Exception as e:
-        print(f"Error creating session: {e}")
-        exit()
-    # --- Session creation done ---
+    create_session(runner, session_id, user_id)
     
     print("\n--- Scenario 1: Normal Run ---")
     user_message1 = Content(parts=[Part(text="Hello ADK!")])
