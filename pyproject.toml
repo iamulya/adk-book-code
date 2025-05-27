@@ -10,4 +10,7 @@ dependencies = [
     "email-validator>=1.1",
     "beautifulsoup4>=4.12.2",
     "lxml>=4.9.3",
+    "crewai-tools>=0.45.0",
+    "langchain-community>=0.3.24",
+    "langgraph>=0.4.7",
 ]
