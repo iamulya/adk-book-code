@@ -9,4 +9,5 @@ dependencies = [
     "pydantic>=2.0, <3.0.0",
     "email-validator>=1.1",
     "beautifulsoup4>=4.12.2",
+    "lxml>=4.9.3",
 ]

@@ -48,8 +48,7 @@ if __name__ == "__main__":
     # --- Session creation done ---
 
     prompts = [
-        "Please fetch the content from '<https://en.wikipedia.org/wiki/Artificial_intelligence>' and tell me the first main section heading.",
-        # "Summarize the content of <https://www.example.com>" # example.com might be too simple
+        "Can you get the main text from [https://www.python.org/] and summarize it in one sentence?"
     ]
 
     for prompt_text in prompts:
