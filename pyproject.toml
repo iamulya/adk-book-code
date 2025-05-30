@@ -15,4 +15,5 @@ dependencies = [
     "langgraph>=0.4.7",
     "duckduckgo-search>=8.0.2",
     "docker>=7.1.0",
+    "google-cloud-aiplatform>=1.95.1",
 ]
