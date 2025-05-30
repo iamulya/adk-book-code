@@ -1,9 +1,13 @@
 
 # tools_examples/langchain_adapter_agent.py
 from google.adk.agents import Agent
-from google.adk.tools import LangchainTool 
+from google.adk.tools.langchain_tool import LangchainTool 
 from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part
+
+from ...utils import load_environment_variables, create_session
+load_environment_variables()
+
 langchain_integrated_agent = None
 try:
     from langchain_community.tools import DuckDuckGoSearchRun
@@ -23,11 +27,14 @@ except ImportError:
 if __name__ == "__main__":
     if langchain_integrated_agent:
         runner = InMemoryRunner(agent=langchain_integrated_agent, app_name="LangchainApp")
+        session_id = "s_langchain_test"
+        user_id = "langchain_user"
+        create_session(runner, session_id, user_id)
         prompt = "What is Langchain?"
         print(f"\nYOU: {prompt}")
-        user_message = Content(parts=[Part(text=prompt)])
+        user_message = Content(parts=[Part(text=prompt)], role="user")
         print("ASSISTANT: ", end="", flush=True)
-        for event in runner.run(user_id="lc_user", session_id="s_lc", new_message=user_message):
+        for event in runner.run(user_id=user_id, session_id=session_id, new_message=user_message):
             if event.content and event.content.parts and event.content.parts[0].text:
                 print(event.content.parts[0].text, end="")
         print()
