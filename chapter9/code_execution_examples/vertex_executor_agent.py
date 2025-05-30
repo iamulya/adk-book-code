@@ -29,7 +29,7 @@ if VERTEX_SDK_AVAILABLE:
 
             vertex_agent = Agent(
                 name="vertex_code_agent",
-                model="gemini-1.5-flash-latest",
+                model="gemini-2.0-flash",
                 instruction="You are an advanced AI assistant. Write Python code to perform calculations or data tasks. Your code will be executed in a secure Vertex AI environment. Default libraries like pandas, numpy, matplotlib are available.",
                 code_executor=vertex_executor
             )
