@@ -1,10 +1,13 @@
 
 # tools_examples/crewai_adapter_agent.py
 from google.adk.agents import Agent
-from google.adk.tools import CrewaiTool 
+from google.adk.tools.crewai_tool import CrewaiTool 
 from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part
 import os
+
+from ...utils import load_environment_variables, create_session
+load_environment_variables()
 crewai_integrated_agent = None
 try:
     from crewai_tools import SerperDevTool 
@@ -25,6 +28,17 @@ except ImportError:
     print("CrewAI or SerperDevTool not found.")
 if __name__ == "__main__":
     if crewai_integrated_agent:
-        # ... (runner logic as in book) ...
         print("CrewAI Agent ready. Run with SERPER_API_KEY set to test.")
+        runner = InMemoryRunner(agent=crewai_integrated_agent, app_name="CrewAIApp")
+        session_id = "s_crewai_test"
+        user_id = "crewai_user"
+        create_session(runner, session_id, user_id)
 
+        prompt = "What is CrewAI?"
+        print(f"\nYOU: {prompt}")
+        user_message = Content(parts=[Part(text=prompt)], role="user")
+        print("ASSISTANT: ", end="", flush=True)
+        for event in runner.run(user_id=user_id, session_id=session_id, new_message=user_message):
+            if event.content and event.content.parts and event.content.parts[0].text:
+                print(event.content.parts[0].text, end="")
+        print()
