@@ -27,10 +27,10 @@ if DOCKER_AVAILABLE:
     dockerfile_dir = "my_python_env"
     os.makedirs(dockerfile_dir, exist_ok=True)
     with open(os.path.join(dockerfile_dir, "Dockerfile"), "w") as df:
-        df.write("FROM python:3.10-slim\\n")
-        df.write("RUN pip install numpy pandas\\n") # Example: add libraries
-        df.write("WORKDIR /app\\n")
-        df.write("COPY . /app\\n") # Not strictly needed if only executing ephemeral code
+        df.write("FROM python:3.10-slim\n")
+        df.write("RUN pip install numpy pandas\n") # Example: add libraries
+        df.write("WORKDIR /app\n")
+        df.write("COPY . /app\n") # Not strictly needed if only executing ephemeral code
 
     try:
         print("Initializing ContainerCodeExecutor (may take a moment to build/pull image)...")
@@ -47,24 +47,24 @@ if DOCKER_AVAILABLE:
             code_executor=container_executor_instance
         )
 
-        # Ensure the container is cleaned up on exit
-        def cleanup_container():
-            if container_executor_instance and hasattr(container_executor_instance, "_ContainerCodeExecutor__cleanup_container"):
-                print("Cleaning up Docker container...")
-                # Note: __cleanup_container is an internal method, direct call is for example clarity.
-                # Proper resource management would ideally be handled by making ContainerCodeExecutor
-                # an async context manager if it holds long-lived resources like a running container.
-                # For now, ADK's MCPToolset shows a pattern with AsyncExitStack for resource cleanup.
-                # A simpler direct cleanup call if the executor instance itself manages its container:
-                if hasattr(container_executor_instance, "_container") and container_executor_instance._container:
-                    try:
-                        container_executor_instance._container.stop()
-                        container_executor_instance._container.remove()
-                        print(f"Container {container_executor_instance._container.id} stopped and removed.")
-                    except Exception as e:
-                        print(f"Error during manual container cleanup: {e}")
+        # Ensure the container is cleaned up on exit - ADK should do it on its own. Provided here only for reference
+        # def cleanup_container():
+        #     if container_executor_instance and hasattr(container_executor_instance, "_ContainerCodeExecutor__cleanup_container"):
+        #         print("Cleaning up Docker container...")
+        #         # Note: __cleanup_container is an internal method, direct call is for example clarity.
+        #         # Proper resource management would ideally be handled by making ContainerCodeExecutor
+        #         # an async context manager if it holds long-lived resources like a running container.
+        #         # For now, ADK's MCPToolset shows a pattern with AsyncExitStack for resource cleanup.
+        #         # A simpler direct cleanup call if the executor instance itself manages its container:
+        #         if hasattr(container_executor_instance, "_container") and container_executor_instance._container:
+        #             try:
+        #                 container_executor_instance._container.stop()
+        #                 container_executor_instance._container.remove()
+        #                 print(f"Container {container_executor_instance._container.id} stopped and removed.")
+        #             except Exception as e:
+        #                 print(f"Error during manual container cleanup: {e}")
 
-        atexit.register(cleanup_container)
+        # atexit.register(cleanup_container)
 
     except Exception as e:
         print(f"Failed to initialize ContainerCodeExecutor. Is Docker running and configured? Error: {e}")
@@ -94,7 +94,7 @@ if __name__ == "__main__":
                 print(f"\\nYOU: {prompt_text}")
                 user_message = Content(parts=[Part(text=prompt_text)], role="user")
                 print("ASSISTANT (via ContainerCodeExecutor): ", end="", flush=True)
-                async for event in runner.run_async(user_id="container_user", session_id="s_container", new_message=user_message):
+                async for event in runner.run_async(user_id=user_id, session_id=session_id, new_message=user_message):
                     if event.content and event.content.parts:
                         for part in event.content.parts:
                             if part.text: print(part.text, end="", flush=True)
