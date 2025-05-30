@@ -13,5 +13,6 @@ dependencies = [
     "crewai-tools>=0.45.0",
     "langchain-community>=0.3.24",
     "langgraph>=0.4.7",
-    "duckduckgo-search>=8.0.2"
+    "duckduckgo-search>=8.0.2",
+    "docker>=7.1.0",
 ]
