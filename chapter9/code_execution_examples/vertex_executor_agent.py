@@ -61,12 +61,12 @@ if __name__ == "__main__":
         async def main():
             for prompt_text in prompts:
                 print(f"\\nYOU: {prompt_text}")
-                user_message = Content(parts=[Part(text=prompt_text)])
+                user_message = Content(parts=[Part(text=prompt_text)], role="user")
                 print("ASSISTANT (via VertexAiCodeExecutor): ", end="", flush=True)
                 # Note: The actual plot image won't be printed to console here.
                 # In the Dev UI or a proper app, you'd handle the output_files
                 # from the CodeExecutionResult (which are then put into Event.actions.artifact_delta).
-                for event in await runner.run_async(user_id=user_id, session_id=session_id, new_message=user_message):
+                async for event in runner.run_async(user_id=user_id, session_id=session_id, new_message=user_message):
                     if event.content and event.content.parts:
                         for part in event.content.parts:
                             if part.text: print(part.text, end="", flush=True)
