@@ -47,8 +47,7 @@ This repository contains the companion code examples for the book "Building Inte
 
 4.  **Configure Environment Variables**:
     The project uses a `.env` file to manage API keys and other configurations.
-    *   Create a `.env` file in the root of the project (`iamulya-adk-book-code/.env`).
-    *   You can copy from a provided `.env.example` if one exists, or create it manually.
+    *   Create a `.env` file in the root of the project (`adk-book-code/.env`).
     *   Add the necessary credentials. See the example below:
 
     **.env.example**:
@@ -100,7 +99,7 @@ This repository contains the companion code examples for the book "Building Inte
 
 ## Running the Examples
 
-Most examples are designed to be run as Python modules from the root directory of the project (`iamulya-adk-book-code/`) after installation. The general format is:
+Most examples are designed to be run as Python modules from the root directory of the project (`adk-book-code/`) after installation. The general format is:
 
 ```bash
 python -m building_intelligent_agents.chapter<N>.path.to.module
@@ -120,9 +119,9 @@ python -m building_intelligent_agents.chapter5.tools.calculator
 *   Ensure your virtual environment is activated.
 *   Ensure your `.env` file is correctly configured with the necessary API keys and credentials for the specific example you are running.
 *   Some examples, particularly those involving OAuth (like the Google Calendar tool in Chapter 7) or complex UI interactions, are best experienced using the ADK Dev UI. To use the Dev UI:
-    1.  Navigate to the root of the project: `cd iamulya-adk-book-code`
+    1.  Navigate to the root of the project: `cd adk-book-code`
     2.  Run the ADK web server: `adk web .`
-    3.  Open your browser to `http://localhost:8008` (or the port indicated).
+    3.  Open your browser to `http://localhost:8000` (or the port indicated).
     4.  Navigate to the agent definition file (e.g., `chapter7/tools_examples/calendar-agent/agent.py`) in the Dev UI to interact with it. The Dev UI will help manage the OAuth flow for Google API tools.
 
 ## Project Structure
