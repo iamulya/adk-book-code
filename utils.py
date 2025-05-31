@@ -20,7 +20,7 @@ def load_environment_variables():
     else:
         print(f"Warning: .env file not found at {dotenv_path}")
 
-def create_session(runner: InMemoryRunner, session_id: str, user_id: str):
+def create_session(runner: InMemoryRunner, session_id: str, user_id: str, state=None):
     """
     Create a new session using the provided runner.
     
@@ -36,6 +36,7 @@ def create_session(runner: InMemoryRunner, session_id: str, user_id: str):
             app_name=runner.app_name,
             user_id=user_id,
             session_id=session_id,
+            state=state or {}
         ))
         print("Session created successfully.")
     except Exception as e:
