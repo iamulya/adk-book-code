@@ -1,37 +1,92 @@
-
 # session_state_examples/scoped_state_demo.py
 from google.adk.agents import Agent
 from google.adk.tools import FunctionTool, ToolContext
 from google.adk.runners import InMemoryRunner
-from google.adk.sessions.state import State 
-from google.genai.types import Content, Part; import asyncio
-def manage_preferences(tool_context: ToolContext, theme: str = None, language: str = None) -> dict:
-    """Sets/gets user and app preferences."""
-    changes={};
-    if theme: tool_context.state[State.USER_PREFIX + "theme"]=theme; changes["user_theme_set"]=theme
-    if language: tool_context.state[State.APP_PREFIX + "default_language"]=language; changes["app_language_set"]=language
-    tool_context.state["last_pref_tool_call_id"]=tool_context.function_call_id
-    tool_context.state[State.TEMP_PREFIX + "last_tool_name"]="manage_preferences"
-    return {"status":"Prefs updated.","changes":changes, "user_theme":tool_context.state.get(State.USER_PREFIX+"theme"), "app_lang":tool_context.state.get(State.APP_PREFIX+"default_language")}
-preference_tool=FunctionTool(manage_preferences)
-state_demo_agent=Agent(name="pref_mgr",model="gemini-2.0-flash",instruction="Manage prefs with 'manage_preferences' tool.",tools=[preference_tool])
-if __name__=="__main__":
-    runner=InMemoryRunner(agent=state_demo_agent,app_name="PrefsDemo")
-    u1="user_alpha"; u2="user_beta"; s1u1="s1_alpha"; s2u1="s2_alpha"; s1u2="s1_beta"
-    async def run_and_print_state(uid,sid,prompt,app="PrefsDemo"):
-        print(f"\n--- User:{uid},Session:{sid} ---\nYOU:{prompt}")
-        msg=Content(parts=[Part(text=prompt)]);print("AGENT:",end="",flush=True)
-        async for ev in runner.run_async(uid,sid,msg):
-            if ev.author==state_demo_agent.name and ev.content and ev.content.parts[0].text and not (ev.get_function_calls() or ev.get_function_responses()):print(ev.content.parts[0].text.strip())
-        s=await runner.session_service.get_session(app,uid,sid)
-        print(f"  Session State:{ {k:v for k,v in s.state.items() if not (k.startswith(State.APP_PREFIX) or k.startswith(State.USER_PREFIX))} }")
-        print(f"  User State ({uid}):{ {k:v for k,v in s.state.items() if k.startswith(State.USER_PREFIX)} }")
-        print(f"  App State ({app}):{ {k:v for k,v in s.state.items() if k.startswith(State.APP_PREFIX)} }")
-        print(f"  Temp State:{ {k:v for k,v in s.state.items() if k.startswith(State.TEMP_PREFIX)} }")
-    async def main():
-        await run_and_print_state(u1,s1u1,"Set theme 'dark', app lang 'English'.")
-        await run_and_print_state(u1,s2u1,"My theme and app lang?")
-        await run_and_print_state(u2,s1u2,"Set theme 'light'. App lang?")
-        await run_and_print_state(u1,s1u1,"My theme again.")
-    asyncio.run(main())
+from google.adk.sessions.state import State # For prefix constants
+from google.genai.types import Content, Part
+import asyncio
 
+from ...utils import load_environment_variables, create_session
+load_environment_variables()  # Load environment variables for ADK configuration
+
+def manage_preferences(tool_context: ToolContext, theme: str, language: str = "") -> dict:
+    """Sets or gets user and app preferences."""
+    changes = {}
+    if theme:
+        tool_context.state[State.USER_PREFIX + "theme"] = theme # user:theme
+        changes["user_theme_set"] = theme
+    if language:
+        tool_context.state[State.APP_PREFIX + "default_language"] = language # app:default_language
+        changes["app_language_set"] = language
+
+    # Example of session-specific state
+    tool_context.state["last_preference_tool_call_id"] = tool_context.function_call_id
+    # Example of temporary state
+    tool_context.state[State.TEMP_PREFIX + "last_tool_name"] = "manage_preferences"
+
+    return {
+        "status": "Preferences updated.",
+        "changes_made": changes,
+        "current_user_theme": tool_context.state.get(State.USER_PREFIX + "theme"),
+        "current_app_language": tool_context.state.get(State.APP_PREFIX + "default_language"),
+        "session_specific_info": tool_context.state.get("last_preference_tool_call_id")
+    }
+
+preference_tool = FunctionTool(func=manage_preferences)
+
+state_demo_agent = Agent(
+    name="preference_manager",
+    model="gemini-2.0-flash",
+    instruction="Manage user and application preferences using the 'manage_preferences' tool. "
+                "You can set a user's theme or the app's default language.",
+    tools=[preference_tool]
+)
+
+if __name__ == "__main__":
+    # Using InMemorySessionService for this demo.
+    # Scoped state behavior is fully realized with persistent services like DatabaseSessionService.
+    runner = InMemoryRunner(agent=state_demo_agent, app_name="PrefsDemo")
+
+    user1_id = "user_alpha"
+    user2_id = "user_beta"
+    session1_user1_id = "s1_alpha"
+    session2_user1_id = "s2_alpha" # Different session for same user
+    session1_user2_id = "s1_beta"
+
+    create_session(runner, user_id=user1_id, session_id=session1_user1_id)
+    create_session(runner, user_id=user1_id, session_id=session2_user1_id)
+    create_session(runner, user_id=user2_id, session_id=session1_user2_id)
+
+    async def run_and_print_state(user_id: str, session_id: str, prompt: str, app_name="PrefsDemo"):
+        print(f"\\n--- Running for User: {user_id}, Session: {session_id} ---")
+        print(f"YOU: {prompt}")
+        user_message = Content(parts=[Part(text=prompt)], role="user")
+        async for event in runner.run_async(user_id=user_id, session_id=session_id, new_message=user_message):
+            if event.author == state_demo_agent.name and event.content and event.content.parts[0].text:
+                 if not event.get_function_calls() and not event.get_function_responses():
+                    print(f"AGENT: {event.content.parts[0].text.strip()}")
+
+        # Inspect state after the run
+        # With InMemorySessionService, app and user scopes are emulated within its single dict.
+        # DatabaseSessionService would store them in separate tables.
+        s = await runner.session_service.get_session(app_name=app_name, user_id=user_id, session_id=session_id)
+        print(f"  Session State for {session_id}: { {k:v for k,v in s.state.items() if not (k.startswith(State.APP_PREFIX) or k.startswith(State.USER_PREFIX))} }")
+        print(f"  User-Scoped State for {user_id} (via session merge): { {k:v for k,v in s.state.items() if k.startswith(State.USER_PREFIX)} }")
+        print(f"  App-Scoped State for {app_name} (via session merge): { {k:v for k,v in s.state.items() if k.startswith(State.APP_PREFIX)} }")
+        print(f"  Temp state (would not persist in DB): { {k:v for k,v in s.state.items() if k.startswith(State.TEMP_PREFIX)} }")
+
+    async def main():
+
+        # User Alpha, Session 1: Set theme and app language
+        await run_and_print_state(user1_id, session1_user1_id, "Set my theme to 'dark' and app language to 'English'.")
+
+        # User Alpha, Session 2: Check theme (should persist for user) and app language (should persist for app)
+        await run_and_print_state(user1_id, session2_user1_id, "What's my theme and the app language?")
+
+        # User Beta, Session 1: Set their theme, check app language (should be what Alpha set)
+        await run_and_print_state(user2_id, session1_user2_id, "Set my theme to 'light'. What's the app language?")
+
+        # User Alpha, Session 1 (again): Check theme (should still be dark)
+        await run_and_print_state(user1_id, session1_user1_id, "Just checking my theme again.")
+
+    asyncio.run(main())
