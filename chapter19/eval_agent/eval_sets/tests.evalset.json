@@ -1,0 +1,52 @@
+{
+    "eval_set_id": "calculator_basic_multiplication_eval_set_v1",
+    "name": "Calculator Basic Multiplication Tests",
+    "description": "Tests the calculator agent's ability to perform simple multiplication using its tool.",
+    "eval_cases": [
+      {
+        "eval_id": "multiply_7_by_6_case",
+        "conversation": [
+          {
+            "invocation_id": "eval_inv_001",
+            "user_content": {
+              "parts": [
+                {
+                  "text": "Hi calculator, what is 7 times 6?"
+                }
+              ],
+              "role": "user"
+            },
+            "final_response": {
+              "parts": [
+                {
+                  "text": "Okay, 7 times 6 is 42."
+                }
+              ],
+              "role": "model"
+            },
+            "intermediate_data": {
+              "tool_uses": [
+                {
+                  "name": "multiply_numbers",
+                  "args": {
+                    "a": 7,
+                    "b": 6
+                  }
+                }
+              ]
+            },
+            "creation_timestamp": 1678886400.0
+          }
+        ],
+        "session_input": {
+          "app_name": "calculator_app_eval",
+          "user_id": "eval_user_123",
+          "state": {
+            "previous_calculation": null
+          }
+        },
+        "creation_timestamp": 1678886400.0
+      }
+    ],
+    "creation_timestamp": 1678886400.0
+  }

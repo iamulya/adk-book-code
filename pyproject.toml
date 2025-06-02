@@ -15,7 +15,8 @@ dependencies = [
     "langgraph>=0.4.7",
     "duckduckgo-search>=8.0.2",
     "docker>=7.1.0",
-    "google-cloud-aiplatform>=1.95.1",
+    #"google-cloud-aiplatform>=1.95.1", # Uncomment if using Google Cloud Vertex AI
     "anthropic>=0.52.0",
-    "litellm>=1.71.2",
+    "litellm>=1.68.0",
+    "google-adk[eval]"
 ]
