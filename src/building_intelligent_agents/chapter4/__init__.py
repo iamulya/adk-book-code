@@ -1,10 +1,4 @@
 # Import the root_agent from your app module
-from .callback_agent import root_agent
-
-# Create a simple object or module-like structure named 'agent'
-# and assign root_agent to it. This mimics the structure ADK might expect.
-class AgentModulePlaceholder:
-    pass
-
-agent = AgentModulePlaceholder()
-agent.root_agent = root_agent # type: ignore
+from .callback_agent import callback_demo_agent as root_agent
+from .creative_writer import creative_writer_agent
+from .dynamic_greeter import dynamic_greeter_agent

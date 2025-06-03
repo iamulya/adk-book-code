@@ -19,6 +19,7 @@ creative_writer_agent = Agent(
         temperature=0.9, top_p=0.95, top_k=40, max_output_tokens=1024,
         safety_settings=custom_safety_settings)
 )
+
 if __name__ == "__main__":
     from google.adk.runners import InMemoryRunner
     from google.genai.types import Content, Part

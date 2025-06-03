@@ -1,0 +1,1 @@
+from .configure_otel_exporter import simple_agent_for_telemetry as root_agent

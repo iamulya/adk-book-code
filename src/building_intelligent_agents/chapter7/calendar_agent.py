@@ -4,27 +4,7 @@ from google.adk.tools.google_api_tool.google_api_toolsets import CalendarToolset
 from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part
 import os
-
-# can't use `from ...utils import load_environment_variables` here because of top-level import error.
-def load_environment_variables():
-    """
-    Load environment variables from a .env file located in the parent directory of the current script.
-    """
-    # Ensure the .env file is loaded from the parent directory
-    # Get the directory of the current script
-    current_script_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Construct the path to the .env file in the parent directory
-    dotenv_path = os.path.join(current_script_dir, ".env")
-
-    # Load the .env file if it exists
-    if os.path.exists(dotenv_path):
-        load_dotenv(dotenv_path=dotenv_path)
-        print(f"Loaded environment variables from: {dotenv_path}")
-    else:
-        print(f"Warning: .env file not found at {dotenv_path}")
-        
-load_environment_variables()
+from building_intelligent_agents.utils import create_session, load_environment_variables, DEFAULT_LLM
 
 # For Google API tools, you'll need OAuth 2.0 Client ID and Secret
 # Get these from Google Cloud Console -> APIs & Services -> Credentials
@@ -46,7 +26,7 @@ if GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET:
         # tool_filter=["calendar_events_list", "calendar_events_get"]
     )
 
-    root_agent = Agent(
+    calendar_agent = Agent(
         name="calendar_assistant",
         model=DEFAULT_LLM,
         instruction="You are a helpful Google Calendar assistant. Use tools to manage calendar events.",
@@ -54,10 +34,10 @@ if GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET:
     )
 
 if __name__ == "__main__":
-    if not root_agent:
+    if not calendar_agent:
         print("Skipping Google Calendar agent example due to missing OAuth credentials.")
     else:
-        runner = InMemoryRunner(agent=root_agent, app_name="CalendarApp")
+        runner = InMemoryRunner(agent=calendar_agent, app_name="CalendarApp")
         # This will likely trigger an OAuth flow the first time in the Dev UI.
         # The Dev UI has mechanisms to help guide you through this.
         # For command-line, handling the full OAuth redirect flow is complex

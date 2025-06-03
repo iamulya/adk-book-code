@@ -4,7 +4,7 @@ import os
 from google.adk.agents import Agent
 from google.adk.agents.readonly_context import ReadonlyContext 
 from datetime import datetime
-from building_intelligent_agents.utils import load_environment_variables
+from building_intelligent_agents.utils import load_environment_variables, DEFAULT_LLM
 
 load_environment_variables()
 

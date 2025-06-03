@@ -3,7 +3,7 @@ from google.adk.agents import Agent
 from google.adk.tools import google_search # Import the pre-built tool
 from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part
-from building_intelligent_agents.utils import create_session, load_environment_variables
+from building_intelligent_agents.utils import create_session, load_environment_variables, DEFAULT_LLM
 
 load_environment_variables()
 

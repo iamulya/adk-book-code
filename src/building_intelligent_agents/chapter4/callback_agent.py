@@ -44,8 +44,6 @@ callback_demo_agent = Agent(
     after_model_callback=my_after_model_cb
 )
 
-root_agent = callback_demo_agent
-
 if __name__ == "__main__":
     from google.adk.runners import InMemoryRunner
     runner = InMemoryRunner(agent=callback_demo_agent, app_name="CallbackApp")

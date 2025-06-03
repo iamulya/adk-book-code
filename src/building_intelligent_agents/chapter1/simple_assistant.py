@@ -6,8 +6,8 @@ from building_intelligent_agents.utils import load_environment_variables, create
 
 load_environment_variables()
 
-root_agent = Agent(
-    name="simple_assistant",
+simple_assistant_agent = Agent(
+    name="simple_assistant_agent",
     model=DEFAULT_LLM,
     instruction="You are a friendly and helpful assistant. Be concise.",
     description="A basic assistant to answer questions.",

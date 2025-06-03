@@ -6,6 +6,9 @@ from google.adk.artifacts import InMemoryArtifactService, GcsArtifactService
 from google.adk.memory import InMemoryMemoryService
 import os
 
+from building_intelligent_agents.utils import load_environment_variables, DEFAULT_LLM
+load_environment_variables()
+
 # Define a simple agent
 my_root_agent = Agent(
     name="main_app_agent",

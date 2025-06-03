@@ -1,10 +1,3 @@
 # Import the root_agent from your app module
-from .main import root_agent
-
-# Create a simple object or module-like structure named 'agent'
-# and assign root_agent to it. This mimics the structure ADK might expect.
-class AgentModulePlaceholder:
-    pass
-
-agent = AgentModulePlaceholder()
-agent.root_agent = root_agent # type: ignore
+from .hello_adk_agent import greeting_agent
+from .my_new_chatbot import ui_test_agent as root_agent
