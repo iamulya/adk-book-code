@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "building-intelligent-agents"
 version = "0.1.0"
@@ -20,3 +24,10 @@ dependencies = [
     "litellm>=1.68.0",
     "google-adk[eval]"
 ]
+
+[tool.setuptools]
+package-dir = {"" = "src"} # Tells setuptools that packages are under the "src" directory
+
+[tool.setuptools.packages.find]
+where = ["src"]  # Location of packages relative to pyproject.toml
+include = ["building_intelligent_agents", "building_intelligent_agents.*"] # Packages to include

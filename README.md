@@ -7,7 +7,7 @@ This repository contains the companion code examples for the book "Building Inte
 *   **Python**: Version 3.12 or higher (as specified in `pyproject.toml`).
 *   **`uv`**: This project uses `uv` for package management. If you don't have it, install it via pip: `pip install uv`.
 *   **API Keys & Credentials**:
-    *   Access to Google Gemini models (e.g., `gemini-2.0-flash`, `gemini-2.5-flash-preview-05-20`) via API key or a Google Cloud Project.
+    *   By default, Gemini models are used for the code examples. If you would rather use another model, please change the DEFAULT_LLM and DEFAULT_REASONING_LLM in `utils.py`.
     *   Google Cloud Project: Required for examples using Vertex AI (including Claude on Vertex, Vertex AI Code Executor, Vertex AI RAG Memory) and Google Cloud services like Application Integration, Secret Manager.
     *   OpenAI API Key: For examples using OpenAI models via LiteLLM (Chapter 10).
     *   Serper API Key: For the CrewAI SerperDevTool example (Chapter 8).
@@ -52,7 +52,7 @@ This repository contains the companion code examples for the book "Building Inte
 
     **.env.example**:
     ```env
-    # Google Gemini API Key (for direct Gemini use, Google Search tool, etc.)
+    # Google Gemini API Key (for direct Gemini use without Vertex AI etc.)  OR your favorite LLM API Key
     GOOGLE_API_KEY="YOUR_GOOGLE_API_KEY"
 
     # Google Cloud Project details (for Vertex AI, Claude on Vertex, App Integration, etc.)
@@ -95,11 +95,19 @@ This repository contains the companion code examples for the book "Building Inte
     # MY_PETSTORE_OAUTH_CLIENT_SECRET="dummy_client_secret_for_petstore_example"
     # MY_PETSTORE_API_KEY="dummy_api_key_value_for_petstore_example"
     ```
-    **Note**: The `utils.py` script loads the `.env` file from the root project directory (`iamulya-adk-book-code`).
+    **Note**: The `utils.py` script loads the `.env` file from the root project directory (`adk-book-code`).
 
 ## Running the Examples
 
-Most examples are designed to be run as Python modules from the root directory of the project (`adk-book-code/`) after installation. The general format is:
+Most examples are designed to be run as Python modules from the root directory of the project (`adk-book-code/`) after installation. 
+
+To begin, install the project using the following command from the root directory of the project (`adk-book-code/`):
+
+```bash
+uv pip install -e .
+```
+
+Now you can run any example by specifying the module path relative to the `building_intelligent_agents` package. The general command structure is:
 
 ```bash
 python -m building_intelligent_agents.chapter<N>.path.to.module
