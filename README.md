@@ -7,7 +7,7 @@ This repository contains the companion code examples for the book "Building Inte
 *   **Python**: Version 3.12 or higher (as specified in `pyproject.toml`).
 *   **`uv`**: This project uses `uv` for package management. If you don't have it, install it via pip: `pip install uv`.
 *   **API Keys & Credentials**:
-    *   By default, Gemini models are used for the code examples. If you would rather use another model, please change the DEFAULT_LLM and DEFAULT_REASONING_LLM in `utils.py`.
+    *   By default, Gemini models are used for the code examples. If you would rather use another model, please change the DEFAULT_LLM and DEFAULT_REASONING_LLM in `src/building_intelligent_agents/utils.py`.
     *   Google Cloud Project: Required for examples using Vertex AI (including Claude on Vertex, Vertex AI Code Executor, Vertex AI RAG Memory) and Google Cloud services like Application Integration, Secret Manager.
     *   OpenAI API Key: For examples using OpenAI models via LiteLLM (Chapter 10).
     *   Serper API Key: For the CrewAI SerperDevTool example (Chapter 8).
@@ -20,8 +20,8 @@ This repository contains the companion code examples for the book "Building Inte
 
 1.  **Clone the Repository**:
     ```bash
-    git clone https://github.com/iamulya/iamulya-adk-book-code.git
-    cd iamulya-adk-book-code
+    git clone https://github.com/iamulya/adk-book-code.git
+    cd adk-book-code
     ```
 
 2.  **Create a Virtual Environment (Recommended)**:
@@ -95,17 +95,11 @@ This repository contains the companion code examples for the book "Building Inte
     # MY_PETSTORE_OAUTH_CLIENT_SECRET="dummy_client_secret_for_petstore_example"
     # MY_PETSTORE_API_KEY="dummy_api_key_value_for_petstore_example"
     ```
-    **Note**: The `utils.py` script loads the `.env` file from the root project directory (`adk-book-code`).
+    **Note**: The `src/building_intelligent_agents/utils.py` script loads the `.env` file from the root project directory (`adk-book-code`).
 
 ## Running the Examples
 
 Most examples are designed to be run as Python modules from the root directory of the project (`adk-book-code/`) after installation. 
-
-To begin, install the project using the following command from the root directory of the project (`adk-book-code/`):
-
-```bash
-uv pip install -e .
-```
 
 Now you can run any example by specifying the module path relative to the `building_intelligent_agents` package. The general command structure is:
 
@@ -127,7 +121,8 @@ python -m building_intelligent_agents.chapter5.tools.calculator
 *   Ensure your virtual environment is activated.
 *   Ensure your `.env` file is correctly configured with the necessary API keys and credentials for the specific example you are running.
 *   Some examples, particularly those involving OAuth (like the Google Calendar tool in Chapter 7) or complex UI interactions, are best experienced using the ADK Dev UI. To use the Dev UI:
-    1.  Navigate to the root of the project: `cd adk-book-code`
+    1.  Navigate to the chapter: for e.g. `cd src/building_intelligent_agents/chapter4`
+    2.  Decide on the agent you want to test and update the `init.py` file in the chapter directory to include the agent you want to test: for e.g.
     2.  Run the ADK web server: `adk web .`
     3.  Open your browser to `http://localhost:8000` (or the port indicated).
     4.  Navigate to the agent definition file (e.g., `chapter7/tools_examples/calendar-agent/agent.py`) in the Dev UI to interact with it. The Dev UI will help manage the OAuth flow for Google API tools.
@@ -137,57 +132,25 @@ python -m building_intelligent_agents.chapter5.tools.calculator
 The code is organized by book chapters:
 
 ```
-iamulya-adk-book-code/
-├── README.md                 # This file
-├── __init__.py               # Makes the root directory a package
-├── pyproject.toml            # Project metadata and dependencies
-├── utils.py                  # Utility functions (e.g., env loading, session creation)
-├── uv.lock                   # `uv` lock file for reproducible dependencies
-├── chapter1/                 # Introduction to ADK, basic agent
-│   └── main.py
-├── chapter2/                 # Getting Started with ADK
-│   ├── hello_adk_agent/
-│   └── my_new_chatbot/
-├── chapter4/                 # Agent Definitions (instruction, config, callbacks)
-│   └── agent_definitions/
-├── chapter5/                 # Creating and Using Tools
-│   └── tools/
-├── chapter6/                 # Pre-built Tools (Search, Web Browser, Artifacts, Memory, Choice)
-│   └── tools_examples/
-├── chapter7/                 # API-based Tools (OpenAPI, API Hub, Google APIs)
-│   └── tools_examples/
-├── chapter8/                 # External Framework Tool Adapters (LangChain, CrewAI, MCP)
-│   └── tools_examples/
-├── chapter9/                 # Code Execution (Built-in, Unsafe Local, Container, Vertex AI)
-│   └── code_execution_examples/
-├── chapter10/                # Advanced LLM Configuration (Claude, LiteLLM, Streaming)
-│   └── llm_examples/
-├── chapter11/                # Flows and Planners (Built-in, ReAct)
-│   └── flows_planners_examples/
-├── chapter13/                # Agent Orchestration (Sequential, Parallel, Loop)
-│   └── orchestration_examples/
-├── chapter14/                # Advanced Multi-Agent Systems (LangGraph Integration)
-│   └── advanced_mas/
-├── chapter15/                # Runners (Conceptual placeholders)
-│   └── runner_examples/
-├── chapter16/                # Session State Management
-│   └── session_state_examples/
-├── chapter17/                # Artifacts (Conceptual placeholders)
-│   └── artifacts_examples/
-├── chapter18/                # Memory Services (Conceptual placeholders)
-│   └── memory_examples/
-├── chapter19/                # Evaluation (Conceptual placeholders)
-│   └── my_agent_project/
-├── chapter20/                # Deployment (Conceptual placeholders and basic Docker setup)
-│   ├── deployment_examples/
-│   └── hello_adk_agent/
-├── chapter21/                # Authentication for Tools
-│   └── auth_examples/
-├── chapter22/                # Telemetry
-│   └── telemetry_examples/
-└── chapter25/                # Meta-Agent Output (Conceptual tool placeholder)
-    └── meta_agent_output/
+adk-book-code/
+├── pyproject.toml                # Project configuration and dependencies
+├── src/
+│   └── building_intelligent_agents/
+│       ├── __init__.py
+│       ├── utils.py                # Common utilities, env loading, LLM defaults
+│       ├── chapter1/               # Examples for Chapter 1
+│       │   └── ...
+│       ├── chapter2/
+│       │   └── ...
+│       └── ...                     # Other chapters
+└── .env                            # (User-created) For API keys and secrets
 ```
+
+## Key Files
+
+- `pyproject.toml`: Defines project metadata, dependencies, and build system configuration.
+- `src/building_intelligent_agents/utils.py`: Contains utility functions for loading environment variables from `.env` and defines default LLM model names.
+- `.env` (to be created by you): Stores sensitive information like API keys and project configurations.
 
 ## Specific Considerations
 

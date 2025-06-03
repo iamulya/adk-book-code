@@ -50,6 +50,7 @@ reactive_memory_agent = Agent(
     tools=[load_memory]
 )
 
+root_agent = reactive_memory_agent
 
 if __name__ == "__main__":
     print("--- Testing Proactive Memory Agent (with PreloadMemoryTool) ---")
