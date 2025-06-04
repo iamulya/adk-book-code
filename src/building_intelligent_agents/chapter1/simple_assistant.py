@@ -15,7 +15,7 @@ simple_assistant_agent = Agent(
 
 if __name__ == "__main__":
     print("Initializing Simple Assistant...")
-    runner = InMemoryRunner(agent=root_agent, app_name="MySimpleApp")
+    runner = InMemoryRunner(agent=simple_assistant_agent, app_name="MySimpleApp")
 
     current_session_id = "my_first_session"
     current_user_id = "local_dev_user"

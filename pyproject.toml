@@ -8,7 +8,8 @@ version = "0.1.0"
 description = "Code for Building intelligent agents using Google ADK"
 requires-python = ">=3.12"
 dependencies = [
-    "google-adk==1.1.1",
+    #"google-adk==1.1.1",
+    "google-adk @ git+https://github.com/google/adk-python.git@main",  # Use a range to allow for minor updates
     "langchain-google-genai",
     "pydantic>=2.0, <3.0.0",
     "email-validator>=1.1",
@@ -19,7 +20,7 @@ dependencies = [
     "langgraph>=0.4.7",
     "duckduckgo-search>=8.0.2",
     "docker>=7.1.0",
-    #"google-cloud-aiplatform>=1.95.1", # Uncomment if using Google Cloud Vertex AI
+    #"google-cloud-aiplatform>=1.96.0", # Uncomment if using Google Cloud Vertex AI
     "anthropic>=0.52.0",
     "litellm>=1.68.0",
     "google-adk[eval]"
