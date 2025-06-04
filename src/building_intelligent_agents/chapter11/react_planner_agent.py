@@ -7,7 +7,7 @@ from google.adk.sessions.state import State # For state manipulation
 from google.adk.agents.callback_context import CallbackContext # For planner state
 from google.genai.types import Content, Part, FunctionDeclaration, Schema, Type
 
-from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
+from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_REASONING_LLM
 load_environment_variables()
 
 # Dummy tools for demonstration
@@ -33,7 +33,7 @@ react_planner = PlanReActPlanner()
 # Create the agent
 hr_assistant_react = Agent(
     name="hr_assistant_react",
-    model="DEFAULT_REASONING_LLM", # Needs a strong reasoning model
+    model=DEFAULT_REASONING_LLM, # Needs a strong reasoning model
     instruction="You are an HR assistant. Follow the Plan-Reason-Act-Observe cycle. First, create a plan. Then, for each step, provide reasoning, take an action (use a tool if necessary), and then reason about the observation to proceed or replan. Conclude with a final answer.",
     tools=[search_tool, approval_tool],
     planner=react_planner # Assign the planner

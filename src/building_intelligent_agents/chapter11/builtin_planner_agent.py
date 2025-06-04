@@ -6,7 +6,7 @@ from google.adk.tools import FunctionTool # Example tool
 from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part
 
-from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
+from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_REASONING_LLM
 load_environment_variables()
 
 def get_product_price(product_id: str) -> dict:
@@ -26,7 +26,7 @@ builtin_item_planner = BuiltInPlanner(thinking_config=product_thinking_config)
 
 agent_with_builtin_planner = Agent(
     name="smart_shopper_builtin",
-    model="DEFAULT_REASONING_LLM", # Ensure this model supports ThinkingConfig
+    model=DEFAULT_REASONING_LLM, # Ensure this model supports ThinkingConfig
     instruction="You are an assistant helping a user find product prices. Think step-by-step and use tools.",
     tools=[price_tool],
     planner=builtin_item_planner # Assign the planner

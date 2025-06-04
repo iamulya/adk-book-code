@@ -97,6 +97,7 @@ except Exception as e:
 
 # --- ADK Agent Definition ---
 langgraph_adk_agent = None
+orchestrator = None
 if LANGGRAPH_SETUP_SUCCESS and runnable_graph:
     langgraph_adk_agent = LangGraphAgent(
         name="my_langgraph_powered_agent",
@@ -105,45 +106,42 @@ if LANGGRAPH_SETUP_SUCCESS and runnable_graph:
     )
     print("LangGraphAgent initialized.")
 
-# --- Running the ADK LangGraphAgent ---
-if __name__ == "__main__":
-    if not langgraph_adk_agent:
-        print("LangGraph ADK Agent not initialized. Skipping run.")
-    else:
-        # This orchestrator will use the LangGraphAgent
-        orchestrator = AdkAgent(
+    orchestrator = AdkAgent(
             name="main_orchestrator",
             model=DEFAULT_LLM, # Orchestrator's own model
             instruction="Delegate all tasks to my_langgraph_powered_agent.",
             sub_agents=[langgraph_adk_agent]
         )
-        runner = InMemoryRunner(agent=orchestrator, app_name="LangGraphADKApp")
-        session_id = "s_langgraph_adk" # ADK session ID for the orchestrator
-        user_id = "lg_user"
-        create_session(runner, user_id=user_id, session_id=session_id)
 
-        prompts = [
-            "Hello LangGraph agent, tell me about yourself.",
-            "use the tool.", # To trigger the tool_node path
-            "What happened after the tool use?"
-        ]
+# --- Running the ADK LangGraphAgent ---
+if __name__ == "__main__":
+    runner = InMemoryRunner(agent=orchestrator, app_name="LangGraphADKApp")
+    session_id = "s_langgraph_adk" # ADK session ID for the orchestrator
+    user_id = "lg_user"
+    create_session(runner, user_id=user_id, session_id=session_id)
 
-        async def main():
-            for i, prompt_text in enumerate(prompts):
-                print(f"\\n--- Turn {i+1} ---")
-                print(f"YOU: {prompt_text}")
-                user_message_adk = Content(parts=[Part(text=prompt_text)], role="user")
+    prompts = [
+        "Hello LangGraph agent, tell me about yourself.",
+        "use the tool.", # To trigger the tool_node path
+        "What happened after the tool use?"
+    ]
 
-                print("ORCHESTRATOR/LANGGRAPH_AGENT: ", end="", flush=True)
-                # The orchestrator will likely decide to transfer to langgraph_adk_agent
-                async for event in runner.run_async(
-                    user_id=user_id,
-                    session_id=session_id, 
-                    new_message=user_message_adk
-                ):
-                    for part in event.content.parts:
-                            if part.text:
-                                print(part.text, end="", flush=True)
-                print()
+    async def main():
+        for i, prompt_text in enumerate(prompts):
+            print(f"\\n--- Turn {i+1} ---")
+            print(f"YOU: {prompt_text}")
+            user_message_adk = Content(parts=[Part(text=prompt_text)], role="user")
 
-        asyncio.run(main())
+            print("ORCHESTRATOR/LANGGRAPH_AGENT: ", end="", flush=True)
+            # The orchestrator will likely decide to transfer to langgraph_adk_agent
+            async for event in runner.run_async(
+                user_id=user_id,
+                session_id=session_id, 
+                new_message=user_message_adk
+            ):
+                for part in event.content.parts:
+                        if part.text:
+                            print(part.text, end="", flush=True)
+            print()
+
+    asyncio.run(main())

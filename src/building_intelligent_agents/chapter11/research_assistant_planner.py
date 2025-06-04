@@ -9,7 +9,7 @@ from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part
 import asyncio
 
-from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
+from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_REASONING_LLM, DEFAULT_LLM
 load_environment_variables()
 # Tools
 web_page_loader_tool = FunctionTool(func=load_web_page)
@@ -26,7 +26,7 @@ search_agent = Agent(
 
 research_assistant = Agent(
     name="research_assistant_planner",
-    model="DEFAULT_REASONING_LLM", # Needs good reasoning and tool use
+    model=DEFAULT_REASONING_LLM, # Needs good reasoning and tool use
     instruction="You are a research assistant. Create a plan to answer the user's research query. "
                 "Use search to find relevant information and URLs. "
                 "Use load_web_page to get content from specific URLs if needed. "
