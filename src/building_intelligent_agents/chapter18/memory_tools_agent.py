@@ -9,7 +9,7 @@ from google.genai.types import Content, Part
 import time
 import asyncio
 
-from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
+from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM, DEFAULT_REASONING_LLM
 load_environment_variables()  # Load environment variables for ADK configuration
 
 # Setup dummy memory as in the InMemoryMemoryService example
@@ -25,7 +25,7 @@ memory_service_instance._session_events["MemoryToolsApp/mem_tools_user"] = {"pas
 # Agent using both preload and allowing explicit load
 smart_planner_agent = Agent(
     name="smart_trip_planner",
-    model="DEFAULT_REASONING_LLM", # Needs good reasoning
+    model=DEFAULT_REASONING_LLM, # Needs good reasoning
     instruction="You are a trip planning assistant. Past conversation snippets might be provided under <PAST_CONVERSATIONS> to help you. "
                 "If you need more specific details from past conversations not automatically provided, use the 'load_memory' tool with a targeted query. "
                 "Remember to be helpful and use retrieved information effectively.",
