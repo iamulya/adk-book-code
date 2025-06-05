@@ -1,5 +1,3 @@
-
-# agent_definitions/callback_agent.py
 from google.adk.agents import Agent
 from google.adk.agents.callback_context import CallbackContext
 from google.adk.models.llm_request import LlmRequest

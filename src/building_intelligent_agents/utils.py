@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from google.adk.runners import InMemoryRunner
 
-DEFAULT_LLM="gemini-2.0-flash"
+DEFAULT_LLM="gemini-2.0-flash"#"gemini-2.5-flash-preview-05-20"
 DEFAULT_REASONING_LLM="gemini-2.5-flash-preview-05-20"
 
 def load_environment_variables():

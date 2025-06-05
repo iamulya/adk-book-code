@@ -1,4 +1,3 @@
-# tools_examples/memory_agent.py
 from google.adk.agents import Agent
 from google.adk.tools import load_memory, preload_memory
 from google.adk.runners import InMemoryRunner
@@ -8,7 +7,6 @@ from google.genai.types import Content, Part
 import time
 
 from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
-
 load_environment_variables()
 
 # --- Setup a MemoryService with some data ---
@@ -88,5 +86,3 @@ if __name__ == "__main__":
             for part in event.content.parts:
                 if part.text: print(part.text, end="")
     print()
-
-

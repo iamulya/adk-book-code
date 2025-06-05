@@ -1,5 +1,3 @@
-
-# agent_definitions/dynamic_greeter.py
 import os
 from google.adk.agents import Agent
 from google.adk.agents.readonly_context import ReadonlyContext 
@@ -35,4 +33,3 @@ if __name__ == "__main__":
             for part in event.content.parts:
                 if part.text: print(part.text, end="")
     print()
-

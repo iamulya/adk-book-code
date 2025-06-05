@@ -2,7 +2,7 @@
 # agent_definitions/creative_writer.py
 from google.adk.agents import Agent
 from google.genai.types import GenerateContentConfig, SafetySetting, HarmCategory, HarmBlockThreshold
-from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
+from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM, DEFAULT_REASONING_LLM
 
 load_environment_variables()
 
@@ -12,7 +12,7 @@ custom_safety_settings = [
 ]
 
 creative_writer_agent = Agent(
-    name="creative_writer", model=DEFAULT_LLM, 
+    name="creative_writer", model=DEFAULT_REASONING_LLM, 
     instruction="You are a creative writer. Write a short, imaginative story based on the user's prompt.",
     description="Generates short creative stories.",
     generate_content_config=GenerateContentConfig(
