@@ -1,11 +1,10 @@
-# tools_examples/web_browser_agent.py
 from google.adk.agents import Agent
 from google.adk.tools import FunctionTool
 from google.adk.tools.load_web_page import load_web_page # The function itself
 from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part
-from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
 
+from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
 load_environment_variables()
 
 # Ensure you have the necessary libraries: pip install requests beautifulsoup4 lxml

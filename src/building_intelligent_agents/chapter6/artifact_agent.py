@@ -1,5 +1,3 @@
-
-# tools_examples/artifact_agent.py
 from google.adk.agents import Agent
 from google.adk.tools import load_artifacts # The pre-built tool
 from google.adk.tools.tool_context import ToolContext # For a custom tool to SAVE artifacts
@@ -7,6 +5,7 @@ from google.adk.tools import FunctionTool
 from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part
 import asyncio # For async save_artifact in tool
+
 from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
 load_environment_variables()
 
@@ -22,7 +21,7 @@ report_creator_tool = FunctionTool(func=create_report_artifact)
 
 artifact_handling_agent = Agent(
     name="artifact_manager",
-    model="gemini-1.5-flash-latest",
+    model=DEFAULT_LLM,
     instruction="You can create reports and then later refer to them. If a report is available, use load_artifacts to access its content if needed.",
     tools=[
         report_creator_tool,

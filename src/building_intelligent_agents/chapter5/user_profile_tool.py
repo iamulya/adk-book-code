@@ -1,4 +1,3 @@
-# tools/user_profile_tool.py
 from google.adk.agents import Agent
 from google.adk.agents.readonly_context import ReadonlyContext
 from google.adk.tools import FunctionTool
@@ -63,7 +62,7 @@ if __name__ == "__main__":
     print(" - Update my profile: username is 'testuser', email is 'test@example.com', age is 36")
 
     # This will test if the agent understands that it requires the age parameter
-    print(" - Set user 'janedoe' profile with email 'jane.doe@email.net'.")
+    print(" - Set user 'janedoe' profile with email 'jane.doe@email.net'. (This should fail since age is not provided!)")
     print("-" * 30)
 
     while True:

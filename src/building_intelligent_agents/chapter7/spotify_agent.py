@@ -1,4 +1,3 @@
-# single_spotify_agent_runner.py
 import asyncio
 
 from google.adk.agents import Agent
@@ -7,6 +6,7 @@ from google.adk.auth import AuthCredential, AuthCredentialTypes
 from fastapi.openapi.models import APIKey, APIKeyIn
 from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part
+
 from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
 load_environment_variables()
 
@@ -21,12 +21,12 @@ servers:
   - url: https://api.spotify.com/v1
 components:
   securitySchemes:
-    SpotifyApiKeyAuth: # This name must match the name used in the global `security` or operation-level `security` section
+    SpotifyApiKeyAuth:
       type: apiKey
-      in: header # Can be 'header', 'query', or 'cookie'
-      name: Authorization # This is the header Spotify expects for Bearer tokens
+      in: header
+      name: Authorization # The name of the header is 'Authorization'
 security:
-  - SpotifyApiKeyAuth: [] # Applies ApiKeyAuth globally to all operations
+  - SpotifyApiKeyAuth: [] # Applies this scheme globally
 paths:
   /search:
     get:
@@ -129,26 +129,22 @@ paths:
 # For this example, we'll treat the "Bearer <ACCESS_TOKEN>" string as our "API Key".
 SPOTIFY_BEARER_TOKEN = "Bearer YOUR_SPOTIFY_ACCESS_TOKEN"  # <<< REPLACE THIS!
 
-
-# Define the API Key authentication scheme.
-# This MUST match how `SpotifyApiKeyAuth` is defined in your OpenAPI spec's `components.securitySchemes`.
 spotify_api_key_auth_scheme = APIKey(
     type="apiKey",
-    name="Authorization",    # This is the header name Spotify expects
-    in_=APIKeyIn.header
+    name="Authorization",
+    **{"in": APIKeyIn.header} # We use **{"in": ...} to correctly pass the 'in' parameter, which is a reserved keyword in Python.
 )
 
-# Create the AuthCredential. The `api_key` value will be the full "Bearer <token>" string.
+# The credential type must also match (`API_KEY`).
 spotify_api_key_credential = AuthCredential(
     auth_type=AuthCredentialTypes.API_KEY,
     api_key=SPOTIFY_BEARER_TOKEN
 )
 
 # --- Toolset Setup ---
-# Initialize the OpenAPIToolset.
 spotify_toolset = OpenAPIToolset(
     spec_str=SPOTIFY_API_SPEC_STR,
-    spec_str_type="yaml", # The spec string is in YAML format
+    spec_str_type="yaml",
     auth_scheme=spotify_api_key_auth_scheme,
     auth_credential=spotify_api_key_credential
 )
@@ -184,7 +180,7 @@ if __name__ == "__main__":
         
         exit(1)
 
-    runner = InMemoryRunner(agent=spotify_agent, app_name="SpotifySearchAppSingleFile")
+    runner = InMemoryRunner(agent=spotify_agent, app_name="SpotifySearchApp")
 
     user_id = "spotify_user"
     session_id = "s_spotify"
@@ -201,8 +197,6 @@ if __name__ == "__main__":
     ]
 
     async def main_loop():
-        # Create session once before the loop
-        await create_session(runner, session_id, user_id)
         print("-" * 70)
 
         for prompt_text in prompts:

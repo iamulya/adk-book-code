@@ -1,4 +1,3 @@
-# tools_examples/search_agent.py
 from google.adk.agents import Agent
 from google.adk.tools import google_search # Import the pre-built tool
 from google.adk.runners import InMemoryRunner

@@ -8,8 +8,8 @@ version = "0.1.0"
 description = "Code for Building intelligent agents using Google ADK"
 requires-python = ">=3.12"
 dependencies = [
-    #"google-adk==1.1.1",
-    "google-adk @ git+https://github.com/google/adk-python.git@main",  # Use a range to allow for minor updates
+    "google-adk==1.2.0",
+    #"google-adk @ git+https://github.com/google/adk-python.git@main",
     "langchain-google-genai",
     "pydantic>=2.0, <3.0.0",
     "email-validator>=1.1",

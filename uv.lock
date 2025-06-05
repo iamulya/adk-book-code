@@ -305,7 +305,6 @@ dependencies = [
     { name = "duckduckgo-search" },
     { name = "email-validator" },
     { name = "google-adk", extra = ["eval"] },
-    { name = "google-cloud-aiplatform", extra = ["adk", "agent-engines"] },
     { name = "langchain-community" },
     { name = "langchain-google-genai" },
     { name = "langgraph" },
@@ -322,10 +321,8 @@ requires-dist = [
     { name = "docker", specifier = ">=7.1.0" },
     { name = "duckduckgo-search", specifier = ">=8.0.2" },
     { name = "email-validator", specifier = ">=1.1" },
-    { name = "google-adk", git = "https://github.com/google/adk-python.git?rev=main" },
+    { name = "google-adk", specifier = "==1.2.0" },
     { name = "google-adk", extras = ["eval"] },
-    { name = "google-cloud-aiplatform", specifier = ">=1.96.0" },
-    { name = "google-cloud-aiplatform", extras = ["adk", "agent-engines"] },
     { name = "langchain-community", specifier = ">=0.3.24" },
     { name = "langchain-google-genai" },
     { name = "langgraph", specifier = ">=0.4.7" },
@@ -934,8 +931,8 @@ wheels = [
 
 [[package]]
 name = "google-adk"
-version = "1.1.1"
-source = { git = "https://github.com/google/adk-python.git?rev=main#b1a74d099fae44d41750b79e58455282d919dd78" }
+version = "1.2.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "authlib" },
     { name = "click" },
@@ -957,6 +954,10 @@ dependencies = [
     { name = "sqlalchemy" },
     { name = "tzlocal" },
     { name = "uvicorn" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/87/64/14b570494b376c218ba2a3491a10a18dac83909ad3e321414ce532f04862/google_adk-1.2.0.tar.gz", hash = "sha256:4b345adbdd78111d58cb46d4b7974fb0128b08af58d078561561e1902dc459e3", size = 1104054, upload-time = "2025-06-04T18:47:30.033Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/98/e3/c55fdd75d18ab087ff62d9bb9caa7068aa177f66597c7aadcb4f011d465b/google_adk-1.2.0-py3-none-any.whl", hash = "sha256:3b57c1f80fb6f10e8902a75dc9e521094154da4c21eb2e3ed4c35f8db4d02fa1", size = 1247890, upload-time = "2025-06-04T18:47:28.114Z" },
 ]
 
 [package.optional-dependencies]
@@ -1071,9 +1072,6 @@ wheels = [
 ]
 
 [package.optional-dependencies]
-adk = [
-    { name = "google-adk" },
-]
 agent-engines = [
     { name = "cloudpickle" },
     { name = "google-cloud-logging" },
