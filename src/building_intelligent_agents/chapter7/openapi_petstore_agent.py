@@ -1,9 +1,9 @@
-# tools_examples/openapi_petstore_agent.py
 import json
 from google.adk.agents import Agent
 from google.adk.tools.openapi_tool import OpenAPIToolset # Key import
 from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part
+
 from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
 load_environment_variables()
 
