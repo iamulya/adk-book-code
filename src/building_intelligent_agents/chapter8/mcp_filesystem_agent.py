@@ -1,5 +1,4 @@
 
-# tools_examples/mcp_filesystem_agent.py
 from google.adk.agents import Agent
 from google.adk.tools.mcp_tool import MCPToolset 
 from mcp import StdioServerParameters 
@@ -61,4 +60,3 @@ if __name__ == "__main__":
             print("MCP toolset closed.")
 
     asyncio.run(main())
-

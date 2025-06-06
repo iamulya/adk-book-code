@@ -1,12 +1,11 @@
-# tools_examples/app_integration_agent.py
-# This is a conceptual example, as it requires a configured Application Integration.
 from google.adk.agents import Agent
 from google.adk.tools.application_integration_tool import ApplicationIntegrationToolset
-# from google.adk.runners import InMemoryRunner
-# from google.genai.types import Content, Part
+from google.adk.runners import InMemoryRunner
+from google.genai.types import Content, Part
 import os
-# from ...utils import load_environment_variables, create_session, DEFAULT_LLM
-# load_environment_variables()
+
+from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
+load_environment_variables()
 
 GCP_PROJECT_AI = os.getenv("GOOGLE_CLOUD_PROJECT") # Your GCP Project
 GCP_LOCATION_AI = os.getenv("APP_INTEGRATION_LOCATION", "us-central1")
@@ -26,7 +25,6 @@ if all([GCP_PROJECT_AI, GCP_LOCATION_AI, INTEGRATION_NAME, TRIGGER_ID]):
     elif SERVICE_ACCOUNT_JSON_PATH_AI: # Path provided but not found
         print(f"Warning: Service account key file not found at {SERVICE_ACCOUNT_JSON_PATH_AI}")
 
-
     try:
         # Example: Toolset for a specific integration trigger
         app_int_toolset = ApplicationIntegrationToolset(
@@ -36,17 +34,6 @@ if all([GCP_PROJECT_AI, GCP_LOCATION_AI, INTEGRATION_NAME, TRIGGER_ID]):
             triggers=[TRIGGER_ID], # List of trigger IDs
             service_account_json=sa_json_content_ai # Can be None to use ADC
         )
-
-        # Example: Toolset for an Integration Connector (e.g., Salesforce)
-        # Assume 'my_salesforce_connection' is a configured connector
-        # and it supports 'Account' entity with 'GET' and 'LIST' operations.
-        # app_int_connector_toolset = ApplicationIntegrationToolset(
-        #     project=GCP_PROJECT_AI,
-        #     location=GCP_LOCATION_AI,
-        #     connection="my_salesforce_connection",
-        #     entity_operations={"Account": ["GET", "LIST"]},
-        #     service_account_json=sa_json_content_ai
-        # )
 
         app_integration_agent = Agent(
             name="enterprise_gateway_agent",
@@ -65,29 +52,23 @@ else:
 
 if __name__ == "__main__":
     if app_integration_agent:
-        # runner = InMemoryRunner(agent=app_integration_agent, app_name="AppIntApp")
-        # session_id = "s_app_integration_test"
-        # user_id = "app_integration_user"
-        # create_session(runner, session_id, user_id)
+        runner = InMemoryRunner(agent=app_integration_agent, app_name="AppIntApp")
+        session_id = "s_app_integration_test"
+        user_id = "app_integration_user"
+        create_session(runner, session_id, user_id)
 
-        # ... (runner logic - this would make a call to your specific integration)
-        # prompts = [
-        #     "Your prompt here to trigger the integration, e.g., 'Create a new account in Salesforce.'",
-        #     "Another prompt to trigger a different workflow, e.g., 'List all accounts in Salesforce.'",
-        #     # Add more prompts as needed
-        # ]
-        # for prompt_text in prompts:
-        #     print(f"\\nYOU: {prompt_text}")
-        #     user_message = Content(parts=[Part(text=prompt_text)], role="user")
-        #     print("ASSISTANT: ", end="", flush=True)
+        prompts = [
+            "Send email"
+        ]
+        for prompt_text in prompts:
+            print(f"\\nYOU: {prompt_text}")
+            user_message = Content(parts=[Part(text=prompt_text)], role="user")
+            print("ASSISTANT: ", end="", flush=True)
 
-        #     for event in runner.run(user_id=user_id, session_id=session_id, new_message=user_message):
-        #         if event.content and event.content.parts:
-        #             for part in event.content.parts:
-        #                 if part.text:
-        #                     print(part.text, end="", flush=True)
-        
-        print("Agent with ApplicationIntegrationToolset created, but actual run is conceptual without a live integration.")
-        print("Test with `adk web .` and provide necessary parameters if your integration expects them.")
+            for event in runner.run(user_id=user_id, session_id=session_id, new_message=user_message):
+                if event.content and event.content.parts:
+                    for part in event.content.parts:
+                        if part.text:
+                            print(part.text, end="", flush=True)
     else:
         print("ApplicationIntegration agent not created.")

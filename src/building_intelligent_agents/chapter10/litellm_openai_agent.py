@@ -1,5 +1,3 @@
-
-# llm_examples/litellm_openai_agent.py
 from google.adk.agents import Agent
 # Ensure litellm is installed: pip install google-adk[extensions] or pip install litellm
 try:
@@ -12,6 +10,7 @@ except ImportError:
 from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part
 import os
+
 from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
 load_environment_variables()
 
@@ -22,9 +21,8 @@ if LITELLM_AVAILABLE:
         print("Warning: OPENAI_API_KEY not set. LiteLLM OpenAI example may fail.")
 
     try:
-        # Specify the model using litellm's naming convention (e.g., "openai/gpt-3.5-turbo")
-        openai_llm_instance = LiteLlm(model="gpt-3.5-turbo") # For OpenAI, use "gpt-..."
-                                                          # For Azure OpenAI: "azure/your-deployment-name"
+        # Specify the model using litellm's naming convention (e.g., "openai/gpt-4o")
+        openai_llm_instance = LiteLlm(model="openai/gpt-4o")# For Azure OpenAI: "azure/your-deployment-name"
                                                           # For Cohere: "cohere/command-r"
                                                           # etc.
 

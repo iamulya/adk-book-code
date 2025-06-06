@@ -1,5 +1,5 @@
 from google.adk.agents import Agent
-# Ensure google-cloud-aiplatform is installed sufficiently
+# Ensure google-cloud-aiplatform is installed
 try:
     from google.adk.code_executors import VertexAiCodeExecutor # Key import
     VERTEX_SDK_AVAILABLE = True
@@ -10,6 +10,7 @@ except ImportError:
 from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part
 import os
+
 from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
 load_environment_variables()
 

@@ -1,5 +1,3 @@
-
-# llm_examples/claude_agent.py
 from google.adk.agents import Agent
 from google.adk.models.anthropic_llm import Claude # Import Claude
 from google.adk.models.registry import LLMRegistry
@@ -46,10 +44,9 @@ if __name__ == "__main__":
         create_session(runner, user_id=user_id, session_id=session_id)
 
         user_message = Content(parts=[Part(text="Explain the concept of emergent properties in complex systems.")], role="user")
-        print("\\nClaude Agent:")
+        print("\nClaude Agent:")
         for event in runner.run(user_id=user_id, session_id=session_id, new_message=user_message):
             if event.content and event.content.parts:
                 for part in event.content.parts:
                     if part.text: print(part.text, end="")
         print()
-

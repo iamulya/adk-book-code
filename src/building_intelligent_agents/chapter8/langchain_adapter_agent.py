@@ -1,5 +1,3 @@
-
-# tools_examples/langchain_adapter_agent.py
 from google.adk.agents import Agent
 from google.adk.tools.langchain_tool import LangchainTool 
 from google.adk.runners import InMemoryRunner
@@ -24,6 +22,7 @@ try:
     print("LangchainTool wrapper initialized.")
 except ImportError:
     print("Langchain or DuckDuckGoSearchRun not found.")
+
 if __name__ == "__main__":
     if langchain_integrated_agent:
         runner = InMemoryRunner(agent=langchain_integrated_agent, app_name="LangchainApp")
@@ -38,4 +37,3 @@ if __name__ == "__main__":
             if event.content and event.content.parts and event.content.parts[0].text:
                 print(event.content.parts[0].text, end="")
         print()
-

@@ -2,11 +2,12 @@ from google.adk.agents import Agent
 from google.adk.code_executors import BuiltInCodeExecutor # Key import
 from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part
+
 from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
 load_environment_variables()
 
 # This agent will use the model's internal code interpreter.
-# Ensure you are using a model that supports this (e.g., Gemini 1.5 Pro or later).
+# Ensure you are using a model that supports this.
 # For Gemini API, this is often enabled by default.
 # For Vertex AI, you might need to ensure the model version supports it.
 

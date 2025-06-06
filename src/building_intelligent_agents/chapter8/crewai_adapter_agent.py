@@ -1,5 +1,3 @@
-
-# tools_examples/crewai_adapter_agent.py
 from google.adk.agents import Agent
 from google.adk.tools.crewai_tool import CrewaiTool 
 from google.adk.runners import InMemoryRunner
@@ -8,7 +6,9 @@ import os
 
 from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
 load_environment_variables()
+
 crewai_integrated_agent = None
+
 try:
     from crewai_tools import SerperDevTool 
     if os.getenv("SERPER_API_KEY"):
@@ -26,6 +26,7 @@ try:
     else: print("SERPER_API_KEY not set. Skipping CrewAI SerperDevTool example.")
 except ImportError:
     print("CrewAI or SerperDevTool not found.")
+
 if __name__ == "__main__":
     if crewai_integrated_agent:
         print("CrewAI Agent ready. Run with SERPER_API_KEY set to test.")

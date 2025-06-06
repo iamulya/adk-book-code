@@ -2,6 +2,7 @@ from google.adk.agents import Agent
 from google.adk.code_executors import UnsafeLocalCodeExecutor # Key import
 from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part
+
 from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
 load_environment_variables()
 

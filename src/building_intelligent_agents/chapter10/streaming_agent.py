@@ -1,4 +1,3 @@
-# llm_examples/streaming_agent.py
 from google.adk.agents import Agent
 from google.adk.runners import InMemoryRunner, RunConfig # Import RunConfig
 from google.adk.agents.run_config import StreamingMode # Import StreamingMode

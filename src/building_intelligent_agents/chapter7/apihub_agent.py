@@ -10,12 +10,23 @@ from building_intelligent_agents.utils import load_environment_variables, create
 
 load_environment_variables()
 
-APIHUB_RESOURCE_NAME = os.getenv("MY_APIHUB_API_RESOURCE_NAME")
+# This requires:
+# 1. `google-cloud-secret-manager` to be installed if using Secret Manager for API Hub client auth.
+# 2. Your environment to be authenticated to GCP with permissions to access API Hub
+#    and potentially Secret Manager if API Hub client uses it.
+#    (e.g., `gcloud auth application-default login`)
+# 3. The API to be registered in API Hub.
+
+# Replace with your actual API Hub resource name
+# Format: projects/{project}/locations/{location}/apis/{api}
+# Or optionally: projects/{project}/locations/{location}/apis/{api}/versions/{version}
+# Or even: projects/{project}/locations/{location}/apis/{api}/versions/{version}/specs/{spec}
+APIHUB_RESOURCE_NAME = os.getenv("MY_APIHUB_API_RESOURCE_NAME") # e.g., "projects/my-gcp-project/locations/us-central1/apis/my-customer-api"
 
 class PatchedAPIHubToolset(APIHubToolset):
     """
     A patched version of APIHubToolset that manually sets the server URL
-    to work around a bug where the base_url is not being correctly parsed.
+    to work around a bug where the base_url or server.url is a relative url.
     """
     def __init__(self, *args, **kwargs):
         # Allow passing a custom base_url
@@ -52,13 +63,11 @@ def is_valid_adk_tool(tool: RestApiTool, ctx=None) -> bool:
     for media_type in operation.requestBody.content.values():
         if media_type.schema_ and media_type.schema_.type != 'object':
             # This is the problematic case: a body that isn't a named object.
-            print(f"⚠️  Filtering out tool '{tool.name}' due to non-object requestBody (type: {media_type.schema_.type}).")
+            print(f"Filtering out tool '{tool.name}' due to non-object requestBody (type: {media_type.schema_.type}).")
             return False
 
     # If all checks pass, the tool is considered valid.
     return True
-
-# --- END: The Fix - Define the Tool Filter ---
 
 apihub_connected_agent = None
 
@@ -72,7 +81,6 @@ else:
             name="api_key", # This must match the name in the OpenAPI spec's security scheme
             credential_value="special-key"
         )
-        # --- END: The Fix - Configure Authentication ---
 
         # Apply the filter and the auth config when creating the toolset
         # Use the new PatchedAPIHubToolset class
@@ -88,16 +96,15 @@ else:
         apihub_connected_agent = Agent(
             name="apihub_connector",
             model=DEFAULT_LLM,
-            instruction="You can interact with our company's custom API, registered in API Hub. Use the available tools.",
+            instruction="You can interact with our APIs, registered in API Hub. Use the available tools.",
             tools=[apihub_toolset]
         )
-        print("✅ APIHubToolset and Agent initialized successfully.")
+        print("APIHubToolset and Agent initialized successfully.")
 
     except Exception as e:
-        print(f"❌ Could not initialize APIHubToolset. Error: {e}", file=sys.stderr)
+        print(f"Could not initialize APIHubToolset. Error: {e}", file=sys.stderr)
         sys.exit(1)
 
-# The rest of your main function remains the same...
 if __name__ == "__main__":
     if not apihub_connected_agent:
         print("Agent could not be created. Exiting.", file=sys.stderr)
