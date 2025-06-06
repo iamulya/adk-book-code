@@ -1,4 +1,3 @@
-# flows_planners_examples/research_assistant_planner.py
 from google.adk.agents import Agent
 from google.adk.planners import PlanReActPlanner
 from google.adk.tools.agent_tool import AgentTool
@@ -11,11 +10,8 @@ import asyncio
 
 from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_REASONING_LLM, DEFAULT_LLM
 load_environment_variables()
-# Tools
-web_page_loader_tool = FunctionTool(func=load_web_page)
-# Note: google_search is a built-in style tool, doesn't need FunctionTool wrapper
 
-# Planner
+web_page_loader_tool = FunctionTool(func=load_web_page)
 research_planner = PlanReActPlanner()
 
 search_agent = Agent(

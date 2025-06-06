@@ -1,4 +1,3 @@
-# flows_planners_examples/builtin_planner_agent.py
 from google.adk.agents import Agent
 from google.adk.planners import BuiltInPlanner # Key import
 from google.genai.types import ThinkingConfig # For ThinkingConfig

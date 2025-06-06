@@ -1,4 +1,3 @@
-# flows_planners_examples/react_planner_agent.py
 from google.adk.agents import Agent
 from google.adk.planners import PlanReActPlanner # Key import
 from google.adk.tools import FunctionTool
