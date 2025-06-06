@@ -31,7 +31,7 @@ if __name__ == "__main__":
     config_save_blobs = RunConfig(save_input_blobs_as_artifacts=True)
 
     async def main():
-        print(f"\\n--- Running with save_input_blobs_as_artifacts=True ---")
+        print(f"\n--- Running with save_input_blobs_as_artifacts=True ---")
         print(f"Original user message parts: {len(message_with_upload.parts)}")
         print(f"YOU (conceptually with upload): {user_query_part.text}")
 

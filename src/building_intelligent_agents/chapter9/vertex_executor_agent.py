@@ -61,7 +61,7 @@ if __name__ == "__main__":
         # Add async main loop here
         async def main():
             for prompt_text in prompts:
-                print(f"\\nYOU: {prompt_text}")
+                print(f"\nYOU: {prompt_text}")
                 user_message = Content(parts=[Part(text=prompt_text)], role="user")
                 print("ASSISTANT (via VertexAiCodeExecutor): ", end="", flush=True)
                 # Note: The actual plot image won't be printed to console here.

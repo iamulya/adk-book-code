@@ -63,7 +63,7 @@ class AnalysisOrchestrator(Agent): # Custom agent to manage parallel results
         # The ParallelAgent sets a distinct `branch` for each sub-agent's events.
 
         # Create a summary prompt for the orchestrator's LLM
-        history_summary = "Parallel analysis performed. Results from sub-agents:\\n"
+        history_summary = "Parallel analysis performed. Results from sub-agents:\n"
         sentiment_result_text = "Sentiment: Not found."
         keywords_result_text = "Keywords: Not found."
 
@@ -75,11 +75,11 @@ class AnalysisOrchestrator(Agent): # Custom agent to manage parallel results
                  if not event.get_function_calls() and not event.get_function_responses(): # Final text
                     keywords_result_text = f"Keyword Extraction by '{event.author}' (branch '{event.branch}'): {event.content.parts[0].text.strip()}"
 
-        combined_results_text = f"{sentiment_result_text}\\n{keywords_result_text}"
+        combined_results_text = f"{sentiment_result_text}\n{keywords_result_text}"
         yield Event(
             invocation_id=ctx.invocation_id,
             author=self.name, # Orchestrator's name
-            content=Content(parts=[Part(text=f"Combined analysis results:\\n{combined_results_text}")])
+            content=Content(parts=[Part(text=f"Combined analysis results:\n{combined_results_text}")])
         )
 
 analysis_orchestrator = AnalysisOrchestrator( # Using our custom LlmAgent-like class

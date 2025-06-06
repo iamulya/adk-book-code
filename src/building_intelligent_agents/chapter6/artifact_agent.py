@@ -38,7 +38,7 @@ if __name__ == "__main__":
     async def main():
         # Turn 1: Create an artifact
         prompt1 = "Please create a short report about ADK."
-        print(f"\\nYOU: {prompt1}")
+        print(f"\nYOU: {prompt1}")
         user_message1 = Content(parts=[Part(text=prompt1)], role="user")
         print("AGENT: ", end="", flush=True)
         for event in runner.run(user_id=user_id, session_id=session_id, new_message=user_message1):
@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
         # Turn 2: Ask about the artifact
         prompt2 = "What was in the report you just created?"
-        print(f"\\nYOU: {prompt2}")
+        print(f"\nYOU: {prompt2}")
         user_message2 = Content(parts=[Part(text=prompt2)], role="user")
         print("AGENT: ", end="", flush=True)
         for event in runner.run(user_id=user_id, session_id=session_id, new_message=user_message2):

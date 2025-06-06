@@ -58,4 +58,4 @@ api_key_credential_for_tool = AuthCredential(
 # And ensure its auth_scheme is set correctly if not using a toolset:
 # add_pet_tool.auth_scheme = APIKey(type=AuthSchemeType.apiKey, name="X-CUSTOM-API-KEY", in_=APIKeyIn.header)
 
-print(f"\\nConceptual API Key credential prepared: {api_key_credential_for_tool.model_dump_json(indent=2, exclude_none=True)}")
+print(f"\nConceptual API Key credential prepared: {api_key_credential_for_tool.model_dump_json(indent=2, exclude_none=True)}")

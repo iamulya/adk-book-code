@@ -46,7 +46,7 @@ if __name__ == "__main__":
         create_session(runner, user_id=user_id, session_id=session_id)
 
         user_message = Content(parts=[Part(text="Write a short poem about Python programming.")], role="user")  
-        print("\\nOpenAI GPT Agent (via LiteLLM):")
+        print("\nOpenAI GPT Agent (via LiteLLM):")
         for event in runner.run(user_id=user_id, session_id=session_id, new_message=user_message):
             if event.content and event.content.parts:
                 for part in event.content.parts:

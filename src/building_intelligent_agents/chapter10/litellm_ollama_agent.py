@@ -54,7 +54,7 @@ if __name__ == "__main__":
         create_session(runner, user_id=user_id, session_id=session_id)
 
         user_message = Content(parts=[Part(text="Why is the sky blue? Explain briefly.")], role="user")
-        print("\\nLocal Llama3 Agent (via LiteLLM and Ollama):")
+        print("\nLocal Llama3 Agent (via LiteLLM and Ollama):")
 
         for event in runner.run(user_id=user_id, session_id=session_id, new_message=user_message):
             if event.content and event.content.parts and event.content.parts[0].text:

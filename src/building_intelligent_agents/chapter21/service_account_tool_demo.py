@@ -41,7 +41,7 @@ service_account_auth_cred = AuthCredential(
 )
 
 # conceptual_gcp_tool.configure_auth_credential(service_account_auth_cred)
-print(f"\\nConceptual Service Account AuthCredential prepared (type: {service_account_auth_cred.auth_type}).")
+print(f"\nConceptual Service Account AuthCredential prepared (type: {service_account_auth_cred.auth_type}).")
 
 # When conceptual_gcp_tool.run_async() is called:
 # 1. ToolAuthHandler sees auth_scheme (HTTPBearer) and auth_credential (SERVICE_ACCOUNT type).

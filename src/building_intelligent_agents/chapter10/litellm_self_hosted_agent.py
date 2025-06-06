@@ -68,7 +68,7 @@ if __name__ == "__main__":
         create_session(runner, user_id=user_id, session_id=session_id)
 
         user_message = Content(parts=[Part(text="What is the capital of the moon? Respond imaginatively.")], role="user")
-        print("\\nSelf-Hosted LLM Agent (via LiteLLM):")
+        print("\nSelf-Hosted LLM Agent (via LiteLLM):")
         for event in runner.run(user_id=user_id, session_id=session_id, new_message=user_message):
              if event.content and event.content.parts and event.content.parts[0].text:
                 print(event.content.parts[0].text, end="")

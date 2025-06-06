@@ -36,6 +36,6 @@ if __name__ == "__main__":
                 for part in event.content.parts:
                     if part.text:
                         print(part.text, end="", flush=True) # Print chunks as they arrive
-        print("\\n--- End of Stream ---")
+        print("\n--- End of Stream ---")
 
     asyncio.run(run_with_streaming())

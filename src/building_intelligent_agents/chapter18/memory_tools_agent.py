@@ -44,7 +44,7 @@ if __name__ == "__main__":
     create_session(runner, user_id=user_id, session_id=session_id)  # Create a session for the user
 
     async def run_planner_turn(prompt_text):
-        print(f"\\nYOU: {prompt_text}")
+        print(f"\nYOU: {prompt_text}")
         user_message = Content(parts=[Part(text=prompt_text)], role="user")  # User message to the agent
         print("SMART_TRIP_PLANNER: ", end="", flush=True)
 
@@ -58,7 +58,7 @@ if __name__ == "__main__":
                     if part.text and not (hasattr(part, 'thought') and part.thought): # Don't print thoughts for cleaner CLI
                         print(part.text, end="", flush=True)
                     elif part.function_call:
-                        print(f"\\n  [TOOL CALL by {event.author}]: {part.function_call.name}({part.function_call.args})", end="")
+                        print(f"\n  [TOOL CALL by {event.author}]: {part.function_call.name}({part.function_call.args})", end="")
                     # We might not see tool responses directly if preload_memory_tool is effective
                     # or if load_memory_tool's output is summarized by LLM.
         print()

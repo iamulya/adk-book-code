@@ -25,13 +25,13 @@ user_input_message = Content(parts=[Part(text="A story please.")], role="user") 
 
 async def demo_run_configs():
     # Scenario 1: Default RunConfig (no streaming)
-    print("\\n--- Scenario 1: Default (No Streaming) ---")
+    print("\n--- Scenario 1: Default (No Streaming) ---")
     default_config = RunConfig()
     async for event in runner.run_async(user_id=user_id, session_id=session_id, new_message=user_input_message, run_config=default_config):
         if event.content and event.content.parts[0].text: print(event.content.parts[0].text.strip())
 
     # Scenario 2: SSE Streaming
-    print("\\n--- Scenario 2: SSE Streaming ---")
+    print("\n--- Scenario 2: SSE Streaming ---")
     sse_config = RunConfig(streaming_mode=StreamingMode.SSE)
     async for event in runner.run_async(user_id=user_id, session_id=session_id, new_message=user_input_message, run_config=sse_config):
         if event.content and event.content.parts[0].text:
@@ -40,7 +40,7 @@ async def demo_run_configs():
 
     # Scenario 3: Limiting LLM Calls (Conceptual)
     # This agent doesn't make many calls, but shows the config
-    print("\\n--- Scenario 3: Max LLM Calls (Conceptual) ---")
+    print("\n--- Scenario 3: Max LLM Calls (Conceptual) ---")
     # If agent tries more than 1 LLM call, LlmCallsLimitExceededError would be raised by InvocationContext
     # For this simple agent, it will likely make only 1 call.
     limit_config = RunConfig(max_llm_calls=1)
@@ -51,7 +51,7 @@ async def demo_run_configs():
         print(f"  Caught expected error due to max_llm_calls: {type(e).__name__} - {e}")
 
     # Scenario 4: Input Blobs as Artifacts (Conceptual)
-    print("\\n--- Scenario 4: Save Input Blobs as Artifacts (Conceptual) ---")
+    print("\n--- Scenario 4: Save Input Blobs as Artifacts (Conceptual) ---")
     artifact_config = RunConfig(save_input_blobs_as_artifacts=True)
     # If user_input_message contained a Part with inline_data (e.g., an image),
     # the Runner would save it to the ArtifactService before passing to agent.
@@ -64,7 +64,7 @@ async def demo_run_configs():
     # Scenario 5: Compositional Function Calling (CFC) - Experimental for SSE
     # Requires a model supporting CFC (e.g., Gemini 2.0+ via LIVE API)
     # and BuiltInCodeExecutor or tools that benefit from it.
-    # print("\\n--- Scenario 5: Compositional Function Calling (CFC) via SSE ---")
+    # print("\n--- Scenario 5: Compositional Function Calling (CFC) via SSE ---")
     # cfc_config = RunConfig(
     #     support_cfc=True,
     #     streaming_mode=StreamingMode.SSE # CFC currently implies SSE via LIVE API usage
@@ -78,7 +78,7 @@ async def demo_run_configs():
 
     # Scenario 6: Bidirectional Streaming (BIDI) with Speech & Transcription - Highly Conceptual for CLI
     # This is for `runner.run_live()` and requires actual audio streams.
-    # print("\\n--- Scenario 6: BIDI Streaming with Speech & Transcription (Conceptual for CLI) ---")
+    # print("\n--- Scenario 6: BIDI Streaming with Speech & Transcription (Conceptual for CLI) ---")
     # bidi_config = RunConfig(
     #     streaming_mode=StreamingMode.BIDI,
     #     speech_config=SpeechConfig(

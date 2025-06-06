@@ -12,7 +12,7 @@ runner = InMemoryRunner(agent=greet_agent, app_name="GreetApp")
 user_msg = Content(parts=[Part(text="Hello there!")], role="user")  # User message to the agent
 
 async def use_run_async():
-    print("\\n--- Using run_async ---")
+    print("\n--- Using run_async ---")
     session_id = "s_async"  
     user_id = "async_user"
     create_session(runner, user_id=user_id, session_id=session_id)
@@ -21,7 +21,7 @@ async def use_run_async():
             print(f"Async Event from {event.author}: {event.content.parts[0].text.strip()}")
 
 def use_run_sync():
-    print("\\n--- Using run (sync wrapper) ---")
+    print("\n--- Using run (sync wrapper) ---")
     session_id = "s_sync"  
     user_id = "sync_user"
     create_session(runner, user_id=user_id, session_id=session_id)

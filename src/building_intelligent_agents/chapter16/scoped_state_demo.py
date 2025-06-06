@@ -58,7 +58,7 @@ if __name__ == "__main__":
     create_session(runner, user_id=user2_id, session_id=session1_user2_id)
 
     async def run_and_print_state(user_id: str, session_id: str, prompt: str, app_name="PrefsDemo"):
-        print(f"\\n--- Running for User: {user_id}, Session: {session_id} ---")
+        print(f"\n--- Running for User: {user_id}, Session: {session_id} ---")
         print(f"YOU: {prompt}")
         user_message = Content(parts=[Part(text=prompt)], role="user")
         async for event in runner.run_async(user_id=user_id, session_id=session_id, new_message=user_message):

@@ -62,7 +62,7 @@ if __name__ == "__main__":
     # The Dev UI itself configures an in-memory exporter to populate its Trace view.
 
     print("Running agent. If OpenTelemetry SDK with ConsoleExporter is set up (uncomment setup_otel_sdk()), spans will print to console.")
-    print("Otherwise, use `adk web .` and check the Trace view in the Dev UI.\\n")
+    print("Otherwise, use `adk web .` and check the Trace view in the Dev UI.\n")
 
     runner = InMemoryRunner(agent=simple_agent_for_telemetry, app_name="TelemetryApp")
     user_message = Content(parts=[Part(text="What is telemetry data?")])

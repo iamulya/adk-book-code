@@ -47,7 +47,7 @@ if __name__ == "__main__":
         # and often requires a web server component for the redirect URI.
         # The Dev UI simplifies this for local development.
         prompt = "What are the next 3 events on my primary calendar?"
-        print(f"\\nYOU: {prompt}")
+        print(f"\nYOU: {prompt}")
         # ... (runner and event processing logic) ...
         # This interaction is best tested by running `adk web .` in the parent directory 
         # Make sure you have correctly set up the CALENDAR_OAUTH_CLIENT_ID and CALENDAR_OAUTH_CLIENT_SECRET variables, 

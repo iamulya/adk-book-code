@@ -61,7 +61,7 @@ if __name__ == "__main__":
             "Send email"
         ]
         for prompt_text in prompts:
-            print(f"\\nYOU: {prompt_text}")
+            print(f"\nYOU: {prompt_text}")
             user_message = Content(parts=[Part(text=prompt_text)], role="user")
             print("ASSISTANT: ", end="", flush=True)
 

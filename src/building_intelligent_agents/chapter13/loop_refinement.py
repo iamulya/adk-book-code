@@ -90,7 +90,7 @@ if __name__ == "__main__":
                     elif part.function_response:
                         print(f"    Tool Response for {part.function_response.name}: {part.function_response.response}")
 
-        print("\\n--- Final Output from Loop (last substantive text from sub-agent) ---")
+        print("\n--- Final Output from Loop (last substantive text from sub-agent) ---")
 
         print(f"\nFinal session state: {current_session.state}")
 

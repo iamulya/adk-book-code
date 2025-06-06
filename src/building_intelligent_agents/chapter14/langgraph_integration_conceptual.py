@@ -128,7 +128,7 @@ if __name__ == "__main__":
 
     async def main():
         for i, prompt_text in enumerate(prompts):
-            print(f"\\n--- Turn {i+1} ---")
+            print(f"\n--- Turn {i+1} ---")
             print(f"YOU: {prompt_text}")
             user_message_adk = Content(parts=[Part(text=prompt_text)], role="user")
 

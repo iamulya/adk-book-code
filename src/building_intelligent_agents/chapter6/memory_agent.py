@@ -70,7 +70,7 @@ if __name__ == "__main__":
                 if part.text: print(part.text, end="")
     print()
 
-    print("\\n--- Testing Reactive Memory Agent (with LoadMemoryTool) ---")
+    print("\n--- Testing Reactive Memory Agent (with LoadMemoryTool) ---")
     runner_reactive = InMemoryRunner(agent=reactive_memory_agent, app_name="MemApp")
     runner_reactive.memory_service = memory_service_instance # Inject our populated memory service
 

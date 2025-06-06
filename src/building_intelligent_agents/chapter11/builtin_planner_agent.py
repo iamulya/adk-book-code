@@ -50,12 +50,12 @@ if __name__ == "__main__":
                     if part.text:
                         print(part.text, end="", flush=True)
                     elif hasattr(part, 'thought') and part.thought: # Check if part is a thought
-                        print(f"\\n  [THOUGHT]: {part.text.strip() if part.text else 'No text in thought'}\\n  ", end="")
+                        print(f"\n  [THOUGHT]: {part.text.strip() if part.text else 'No text in thought'}\n  ", end="")
                     # Also print tool calls/responses for clarity if they appear as separate events
                     elif part.function_call:
-                         print(f"\\n  [TOOL CALL]: {part.function_call.name}({part.function_call.args})\\n  ", end="")
+                         print(f"\n  [TOOL CALL]: {part.function_call.name}({part.function_call.args})\n  ", end="")
                     elif part.function_response:
-                         print(f"\\n  [TOOL RESPONSE to {part.function_response.name}]: {part.function_response.response}\\n  ", end="")
+                         print(f"\n  [TOOL RESPONSE to {part.function_response.name}]: {part.function_response.response}\n  ", end="")
         print()
 
     import asyncio

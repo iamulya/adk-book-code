@@ -52,7 +52,7 @@ if __name__ == "__main__":
     async def main():
         # Turn 1: Create an artifact
         prompt1 = "Please create a file named 'notes.txt' with the content 'ADK is great for building agents.'"
-        print(f"\\n--- Turn 1 --- \\nYOU: {prompt1}")
+        print(f"\n--- Turn 1 --- \nYOU: {prompt1}")
         user_message1 = Content(parts=[Part(text=prompt1)], role="user")  # User message to the agent
         print("AGENT: ", end="", flush=True)
         async for event in runner.run_async(user_id="mem_artifact_user", session_id=session_id, new_message=user_message1):
@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
         # Turn 2: Load the artifact
         prompt2 = "Now, please read the content of 'notes.txt'."
-        print(f"\\n--- Turn 2 --- \\nYOU: {prompt2}")
+        print(f"\n--- Turn 2 --- \nYOU: {prompt2}")
         user_message2 = Content(parts=[Part(text=prompt2)], role="user")  # User message to the agent
         print("AGENT: ", end="", flush=True)
         async for event in runner.run_async(user_id="mem_artifact_user", session_id=session_id, new_message=user_message2):

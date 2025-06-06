@@ -70,7 +70,7 @@ if __name__ == "__main__":
                          print(f"\n  [TOOL CALL]: {part.function_call.name}({part.function_call.args})\n  ", end="")
                     elif part.function_response:
                          print(f"\n  [TOOL RESPONSE to {part.function_response.name}]: {part.function_response.response}\n  ", end="")
-        print("\\n--- Combined Agent Response ---")
+        print("\n--- Combined Agent Response ---")
         print("".join(full_response_parts))
 
     import asyncio

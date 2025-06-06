@@ -45,7 +45,7 @@ if DATA_STORE_ID:
             create_session(runner, session_id, user_id)
 
             prompt = "What is double descent phenomenon"
-            print(f"\\nYOU: {prompt}")
+            print(f"\nYOU: {prompt}")
             user_message = Content(parts=[Part(text=prompt)], role="user")
             print("ASSISTANT: ", end="", flush=True)
             for event in runner.run(user_id=user_id, session_id=session_id, new_message=user_message):
@@ -54,7 +54,7 @@ if DATA_STORE_ID:
                         if part.text:
                             print(part.text, end="", flush=True)
                     if event.grounding_metadata and event.grounding_metadata.retrieval_queries:
-                         print(f"\\n  (Retrieved from Vertex AI Search with queries: {event.grounding_metadata.retrieval_queries})", end="")
+                         print(f"\n  (Retrieved from Vertex AI Search with queries: {event.grounding_metadata.retrieval_queries})", end="")
             print()
 else:
     print("Skipping VertexAiSearchTool agent definition as DATA_STORE_ID is not set.")

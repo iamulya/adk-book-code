@@ -40,7 +40,7 @@ if __name__ == "__main__":
     async def main():
         # Turn 1: Create an image artifact
         prompt1 = "Please create a dummy image named 'logo.png'."
-        print(f"\\n--- Turn 1: Create Artifact --- \\nYOU: {prompt1}")
+        print(f"\n--- Turn 1: Create Artifact --- \nYOU: {prompt1}")
         user_message1 = Content(parts=[Part(text=prompt1)], role="user")  # User message to the agent
         print("AGENT: ", end="", flush=True)
         async for event in runner.run_async(user_id=user_id, session_id=session_id, new_message=user_message1):
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         # Turn 2: Ask about the artifact. `load_artifacts_tool` will inform the LLM it exists.
         # LLM should then call `load_artifacts`.
         prompt2 = "Describe the 'logo.png' artifact you created."
-        print(f"\\n--- Turn 2: Ask to Describe Artifact --- \\nYOU: {prompt2}")
+        print(f"\n--- Turn 2: Ask to Describe Artifact --- \nYOU: {prompt2}")
         user_message2 = Content(parts=[Part(text=prompt2)], role="user")  # User message to the agent
         print("AGENT: ", end="", flush=True)
         async for event in runner.run_async(user_id=user_id, session_id=session_id, new_message=user_message2):

@@ -73,7 +73,7 @@ if __name__ == "__main__":
     create_session(runner, user_id=user_id, session_id=session_id_2)  # Create second session
 
     async def run_turn(uid, sid, prompt_text, expected_tool_call=None):
-        print(f"\\n--- Running for User: {uid}, Session: {sid} ---")
+        print(f"\n--- Running for User: {uid}, Session: {sid} ---")
         print(f"YOU: {prompt_text}")
         user_message = Content(parts=[Part(text=prompt_text)], role="user")
         print("AGENT: ", end="", flush=True)
@@ -83,12 +83,12 @@ if __name__ == "__main__":
             # For debugging, show tool calls
             if event.get_function_calls():
                 for fc in event.get_function_calls():
-                    print(f"\\n  [TOOL CALL by {event.author}]: {fc.name}({fc.args})")
+                    print(f"\n  [TOOL CALL by {event.author}]: {fc.name}({fc.args})")
                     if expected_tool_call and fc.name == expected_tool_call:
                         print(f"    (Matches expected tool call: {expected_tool_call})")
             if event.get_function_responses():
                  for fr in event.get_function_responses():
-                    print(f"\\n  [TOOL RESPONSE to {fr.name}]: {fr.response}")
+                    print(f"\n  [TOOL RESPONSE to {fr.name}]: {fr.response}")
 
     async def main():
         # Turn 1 (Session 1): Store some information
@@ -105,7 +105,7 @@ if __name__ == "__main__":
 
         # Verify memory content (InMemoryMemoryService specific inspection)
         search_res = await memory_service.search_memory(app_name="MemoryDemoApp", user_id=user_id, query="hobby")
-        print(f"\\n[DEBUG] Direct memory search for 'hobby' found {len(search_res.memories)} entries.")
+        print(f"\n[DEBUG] Direct memory search for 'hobby' found {len(search_res.memories)} entries.")
         for entry in search_res.memories:
             print(f"  - Author: {entry.author}, Content: {entry.content.parts[0].text if entry.content.parts else ''}")
 

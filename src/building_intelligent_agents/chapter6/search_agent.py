@@ -27,7 +27,7 @@ if __name__ == "__main__":
     create_session(runner, session_id, user_id)
 
     for prompt_text in prompts:
-        print(f"\\nYOU: {prompt_text}")
+        print(f"\nYOU: {prompt_text}")
         user_message = Content(parts=[Part(text=prompt_text)], role="user")
 
         print("ASSISTANT: ", end="", flush=True)
@@ -38,5 +38,5 @@ if __name__ == "__main__":
                         print(part.text, end="", flush=True)
                     # With search, grounding metadata might be present
                     if event.grounding_metadata and event.grounding_metadata.web_search_queries:
-                        print(f"\\n  (Searched for: {event.grounding_metadata.web_search_queries})", end="")
+                        print(f"\n  (Searched for: {event.grounding_metadata.web_search_queries})", end="")
         print()

@@ -1,4 +1,3 @@
-# orchestration_examples/sequential_pipeline.py
 from google.adk.agents import Agent, SequentialAgent # Import SequentialAgent
 from google.adk.tools import FunctionTool, ToolContext
 from google.adk.runners import InMemoryRunner
