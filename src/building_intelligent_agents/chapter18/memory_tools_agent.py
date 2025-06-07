@@ -1,4 +1,3 @@
-# memory_examples/memory_tools_agent.py
 from google.adk.agents import Agent
 from google.adk.tools import load_memory, preload_memory
 from google.adk.runners import InMemoryRunner

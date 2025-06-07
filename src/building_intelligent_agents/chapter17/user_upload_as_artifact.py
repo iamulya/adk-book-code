@@ -1,4 +1,3 @@
-# artifacts_examples/user_upload_as_artifact.py
 from google.adk.agents import Agent
 from google.adk.tools import load_artifacts # To access it later
 from google.adk.runners import InMemoryRunner, RunConfig # Import RunConfig

@@ -1,4 +1,3 @@
-# orchestration_examples/parallel_analysis.py
 from google.adk.agents import Agent, ParallelAgent # Import ParallelAgent
 from google.adk.events import Event
 from google.adk.runners import InMemoryRunner

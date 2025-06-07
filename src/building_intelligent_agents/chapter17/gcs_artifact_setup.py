@@ -1,4 +1,3 @@
-# artifacts_examples/gcs_artifact_setup.py
 from google.adk.artifacts import GcsArtifactService
 import os
 

@@ -1,1 +1,1 @@
-from .langgraph_integration_conceptual import orchestrator as root_agent
+from .langgraph_integration import orchestrator as root_agent

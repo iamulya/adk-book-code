@@ -1,4 +1,3 @@
-# advanced_mas/langgraph_integration_conceptual.py
 # This is a conceptual example. A full, runnable LangGraph example
 # can be quite involved and depends on specific LangGraph setup.
 # Ensure 'langgraph' and 'langchain_core' are installed: pip install langgraph langchain_core

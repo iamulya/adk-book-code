@@ -1,4 +1,3 @@
-# artifacts_examples/in_memory_artifact_demo.py
 from google.adk.agents import Agent
 from google.adk.tools import FunctionTool, ToolContext
 from google.adk.runners import InMemoryRunner

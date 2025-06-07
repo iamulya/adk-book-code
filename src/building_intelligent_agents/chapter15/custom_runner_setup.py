@@ -1,4 +1,3 @@
-# runner_examples/custom_runner_setup.py
 from google.adk.agents import Agent
 from google.adk.runners import Runner
 from google.adk.sessions import InMemorySessionService, DatabaseSessionService

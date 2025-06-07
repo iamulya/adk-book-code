@@ -1,4 +1,3 @@
-# orchestration_examples/loop_refinement.py
 from google.adk.agents import Agent, LoopAgent # Import LoopAgent
 from google.adk.tools import FunctionTool, ToolContext, exit_loop # Import exit_loop
 from google.adk.runners import InMemoryRunner

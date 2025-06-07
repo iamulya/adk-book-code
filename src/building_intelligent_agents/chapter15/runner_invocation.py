@@ -1,4 +1,3 @@
-# runner_examples/runner_invocation.py
 from google.adk.agents import Agent
 from google.adk.runners import InMemoryRunner # InMemoryRunner is a pre-configured Runner
 from google.genai.types import Content, Part

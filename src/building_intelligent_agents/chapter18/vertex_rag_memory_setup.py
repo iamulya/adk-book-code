@@ -1,4 +1,3 @@
-# memory_examples/vertex_rag_memory_setup.py
 from google.adk.memory import VertexAiRagMemoryService
 import os
 

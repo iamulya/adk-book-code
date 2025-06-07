@@ -1,4 +1,3 @@
-# runner_examples/run_config_demo.py
 from google.adk.agents import Agent
 from google.adk.runners import InMemoryRunner, RunConfig
 from google.adk.agents.run_config import StreamingMode
