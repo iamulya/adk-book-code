@@ -3,7 +3,6 @@
     "image": "mcr.microsoft.com/devcontainers/python:3.12-bullseye",
 
     "features": {
-        // google-cloud-cli feature removed
         "ghcr.io/devcontainers/features/node:1": {
             "version": "lts"
         },
@@ -16,12 +15,15 @@
     "customizations": {
         "vscode": {
             "settings": {
-                "python.pythonPath": "/usr/local/bin/python",
-                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                // It's often better to let the Python extension discover the interpreter
+                // once the venv is activated, or point it directly to the venv python.
+                // "python.pythonPath": "/workspaces/${localWorkspaceFolderBasename}/.venv/bin/python",
+                "python.defaultInterpreterPath": "/workspaces/${localWorkspaceFolderBasename}/.venv/bin/python",
                 "python.linting.pylintEnabled": true,
                 "python.linting.enabled": true,
                 "python.formatting.provider": "black",
                 "editor.formatOnSave": true,
+                // Disable the Python extension's automatic activation prompt if we handle it via shell profile
                 "python.terminal.activateEnvironment": false
             },
             "extensions": [
@@ -29,7 +31,7 @@
                 "ms-python.vscode-pylance",
                 "ms-python.pylint",
                 "ms-azuretools.vscode-docker",
-                "googlecloudtools.cloudcode", // Still useful even with manual gcloud install
+                "googlecloudtools.cloudcode",
                 "bierner.markdown-preview-github-styles",
                 "streetsidesoftware.code-spell-checker",
                 "njpwerner.autodocstring",
@@ -38,14 +40,9 @@
         }
     },
 
-    // Modified postCreateCommand to include gcloud installation
-    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends coreutils apt-transport-https ca-certificates gnupg curl && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && echo 'deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main' | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && sudo apt-get update && sudo apt-get install -y google-cloud-cli && pipx install uv && uv venv && . .venv/bin/activate && uv pip install -e .",
-
+    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends coreutils apt-transport-https ca-certificates gnupg curl && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && echo 'deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main' | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && sudo apt-get update && sudo apt-get install -y google-cloud-cli && pipx install uv && cd /workspaces/${localWorkspaceFolderBasename} && uv venv && echo 'source /workspaces/${localWorkspaceFolderBasename}/.venv/bin/activate' >> ~/.bashrc && . .venv/bin/activate && uv pip install -e .",
+  
     "forwardPorts": [8000, 8008],
-
-    // "runArgs": [  
-    //     "--env-file", "${localWorkspaceFolder}/.env"
-    // ],
 
     "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
     "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,consistency=cached",
