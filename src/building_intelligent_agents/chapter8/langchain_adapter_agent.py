@@ -12,7 +12,7 @@ try:
     langchain_search_tool_instance = DuckDuckGoSearchRun()
     adk_wrapped_duckduckgo = LangchainTool(
         tool=langchain_search_tool_instance, name="internet_search_duckduckgo", 
-        description="A wrapper for DuckDuckGo Search."
+        description="A tool to perform a web search using DuckDuckGo to find information on a given topic."
     )
     langchain_integrated_agent = Agent(
         name="langchain_search_user", model=DEFAULT_LLM,
