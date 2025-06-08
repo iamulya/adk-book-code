@@ -104,6 +104,8 @@ dataclasses-json==0.6.7
     # via langchain-community
 decorator==5.2.1
     # via ipython
+deprecated==1.2.18
+    # via building-intelligent-agents (pyproject.toml)
 deprecation==2.1.0
     # via lancedb
 distro==1.9.0
@@ -192,7 +194,9 @@ google-auth==2.40.3
 google-auth-httplib2==0.2.0
     # via google-api-python-client
 google-cloud-aiplatform==1.96.0
-    # via google-adk
+    # via
+    #   building-intelligent-agents (pyproject.toml)
+    #   google-adk
 google-cloud-appengine-logging==1.6.1
     # via google-cloud-logging
 google-cloud-audit-log==0.3.2
@@ -932,7 +936,9 @@ websockets==15.0.1
     #   google-genai
     #   uvicorn
 wrapt==1.17.2
-    # via opentelemetry-instrumentation
+    # via
+    #   deprecated
+    #   opentelemetry-instrumentation
 xxhash==3.5.0
     # via langgraph
 yarl==1.20.0
