@@ -15,12 +15,27 @@
     "customizations": {
         "vscode": {
             "settings": {
+                // Python extension settings
                 "python.defaultInterpreterPath": "/workspaces/${localWorkspaceFolderBasename}/.venv/bin/python",
                 "python.linting.pylintEnabled": true,
                 "python.linting.enabled": true,
                 "python.formatting.provider": "black",
                 "editor.formatOnSave": true,
-                "python.terminal.activateEnvironment": false // We handle activation via .bashrc
+                // Terminal settings for custom profile activation
+                "python.terminal.activateEnvironment": false, // Disable Python extension's auto-activation
+                "terminal.integrated.defaultProfile.linux": "adk-venv",
+                "terminal.integrated.profiles.linux": {
+                    "bash": { // Keep the standard bash profile available if needed
+                        "path": "/bin/bash",
+                        "args": []
+                    },
+                    "adk-venv": { // Our custom, activated profile
+                        "path": "/bin/bash",
+                        // Corrected path for activate script, ensuring it's absolute
+                        "args": ["--init-file", "/workspaces/${localWorkspaceFolderBasename}/.devcontainer/activate_venv.sh"],
+                        "icon": "terminal-python"
+                    }
+                }
             },
             "extensions": [
                 "ms-python.python",
@@ -36,7 +51,8 @@
         }
     },
 
-    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends coreutils apt-transport-https ca-certificates gnupg curl && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && echo 'deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main' | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && sudo apt-get update && sudo apt-get install -y google-cloud-cli && pipx install uv && cd /workspaces/${localWorkspaceFolderBasename} && uv venv && echo 'source /workspaces/${localWorkspaceFolderBasename}/.venv/bin/activate' >> ~/.bashrc && . .venv/bin/activate && uv pip sync uv.lock && uv pip install -e .",
+    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends coreutils apt-transport-https ca-certificates gnupg curl && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && echo 'deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main' | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && sudo apt-get update && sudo apt-get install -y google-cloud-cli && pipx install uv && cd /workspaces/${localWorkspaceFolderBasename} && uv venv && . .venv/bin/activate && uv pip sync uv.lock && uv pip install --no-deps -e . && echo 'source /workspaces/${localWorkspaceFolderBasename}/.venv/bin/activate' >> ~/.bashrc",
+    // The .bashrc addition is still useful for SSH sessions or shells not launched via VS Code's profile system.
 
     "forwardPorts": [8000, 8008],
 
