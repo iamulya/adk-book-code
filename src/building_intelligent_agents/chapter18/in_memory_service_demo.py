@@ -5,7 +5,6 @@ from google.adk.sessions.session import Session
 from google.adk.events.event import Event
 from google.adk.memory import InMemoryMemoryService # Explicit import for clarity
 from google.genai.types import Content, Part
-import time
 import asyncio
 
 from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM

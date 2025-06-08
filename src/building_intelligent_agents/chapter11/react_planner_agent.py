@@ -4,7 +4,7 @@ from google.adk.tools import FunctionTool
 from google.adk.runners import InMemoryRunner
 from google.adk.sessions.state import State # For state manipulation
 from google.adk.agents.callback_context import CallbackContext # For planner state
-from google.genai.types import Content, Part, FunctionDeclaration, Schema, Type
+from google.genai.types import Content, Part
 
 from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_REASONING_LLM
 load_environment_variables()

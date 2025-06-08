@@ -1,7 +1,6 @@
 from google.adk.agents import Agent
 from google.adk.tools import load_memory, preload_memory
 from google.adk.runners import InMemoryRunner
-from google.adk.sessions.session import Session
 from google.adk.events.event import Event
 from google.adk.memory import InMemoryMemoryService
 from google.genai.types import Content, Part

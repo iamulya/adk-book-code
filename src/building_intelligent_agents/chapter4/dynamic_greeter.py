@@ -1,4 +1,3 @@
-import os
 from google.adk.agents import Agent
 from google.adk.agents.readonly_context import ReadonlyContext 
 from datetime import datetime

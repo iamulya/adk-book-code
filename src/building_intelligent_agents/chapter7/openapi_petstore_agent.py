@@ -1,4 +1,3 @@
-import json
 from google.adk.agents import Agent
 from google.adk.tools.openapi_tool import OpenAPIToolset # Key import
 from google.adk.runners import InMemoryRunner

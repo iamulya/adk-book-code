@@ -1,4 +1,3 @@
-from dotenv import load_dotenv
 from google.adk.agents import Agent 
 from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part

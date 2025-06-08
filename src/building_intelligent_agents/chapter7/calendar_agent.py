@@ -1,11 +1,9 @@
-from dotenv import load_dotenv
 from google.adk.agents import Agent
 from google.adk.tools.google_api_tool.google_api_toolsets import CalendarToolset # Pre-packaged
 from google.adk.runners import InMemoryRunner
-from google.genai.types import Content, Part
 import os
 
-from building_intelligent_agents.utils import create_session, load_environment_variables, DEFAULT_LLM
+from building_intelligent_agents.utils import DEFAULT_LLM
 
 # For Google API tools, you'll need OAuth 2.0 Client ID and Secret
 # Get these from Google Cloud Console -> APIs & Services -> Credentials

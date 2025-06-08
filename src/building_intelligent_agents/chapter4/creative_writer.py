@@ -1,5 +1,3 @@
-
-# agent_definitions/creative_writer.py
 from google.adk.agents import Agent
 from google.genai.types import GenerateContentConfig, SafetySetting, HarmCategory, HarmBlockThreshold
 from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM, DEFAULT_REASONING_LLM

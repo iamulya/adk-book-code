@@ -1,19 +1,15 @@
-import os
 from google.cloud import aiplatform
 from vertexai.preview import reasoning_engines
-from google.genai import types as adk_types # For constructing the message
 
 # --- Configuration ---
-PROJECT_ID = "genai-setup"#"<your-gcp-project-id>"  # Replace with your Project ID
-LOCATION = "us-central1"#"<your-gcp-region>"      # Replace with the region of your Agent Engine
+PROJECT_ID = "<your-gcp-project-id>"  # Replace with your Project ID
+LOCATION = "<your-gcp-region>"      # Replace with the region of your Agent Engine
 RESOURCE_NUMERIC_ID = "<numeric_id_from_full_resource_name>" # The numeric ID part from the full resource name
 REASONING_ENGINE_ID = "projects/{}/locations/{}/reasoningEngines/{}".format(
     PROJECT_ID,
     LOCATION,
     RESOURCE_NUMERIC_ID 
 )
-
-REASONING_ENGINE_ID = "projects/genai-setup/locations/us-central1/reasoningEngines/8162396092609069056"
 
 # --- Initialize Vertex AI SDK ---
 aiplatform.init(project=PROJECT_ID, location=LOCATION)

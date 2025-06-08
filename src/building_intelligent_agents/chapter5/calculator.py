@@ -2,7 +2,6 @@ from google.adk.tools import FunctionTool
 from google.adk.agents import Agent
 from google.adk.runners import InMemoryRunner
 from google.genai.types import Content, Part
-from typing import Union 
 
 from building_intelligent_agents.utils import load_environment_variables, create_session, DEFAULT_LLM
 
