@@ -143,7 +143,7 @@ All examples should be run from the `src/building_intelligent_agents` directory.
         adk web .
         ```
     4.  Open your browser to `http://localhost:8000` (or the port indicated in the terminal).
-    5.  In the Dev UI, you will see the project structure. **Navigate to the specific chapter (e.g., `chapter7`) and then to the agent definition file** (e.g., `calendar_agent.py`) to interact with it. The Dev UI will automatically load the `root_agent` you configured in the chapter's `__init__.py` and help manage OAuth flows and provide detailed execution traces.
+    5.  In the Dev UI, you will see the project structure. **Navigate to the specific chapter (e.g., `chapter7`) that contains your agent** (e.g., `calendar_agent.py`) to interact with it. The Dev UI will automatically load the `root_agent` you configured in the chapter's `__init__.py` and help manage OAuth flows and provide detailed execution traces.
 
 **Important Notes on Running Examples**:
 *   Ensure your virtual environment is activated.
