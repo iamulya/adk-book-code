@@ -1,94 +1,54 @@
 {
-    "name": "Code Examples - Building Intelligent Agents using Google's ADK",
-    // Choose a base Docker image. A Python 3.12 image is a good start.
-    // You can also use a more feature-rich image like mcr.microsoft.com/devcontainers/python:0-3.12
-    // or mcr.microsoft.com/devcontainers/universal:2 for more pre-installed tools.
+    "name": "ADK Book Code Examples",
     "image": "mcr.microsoft.com/devcontainers/python:3.12-bullseye",
 
     "features": {
-        // Install Node.js (for npx in Chapter 8)
-        "ghcr.io/devcontainers/features/node:latest": {
-            "version": "lts" // Or a specific version like "18" or "20"
+        // google-cloud-cli feature removed
+        "ghcr.io/devcontainers/features/node:1": {
+            "version": "lts"
         },
-        // Install Docker-in-Docker (for Chapter 9 ContainerCodeExecutor)
-        // This allows you to run Docker commands from within the dev container.
-        "ghcr.io/devcontainers/features/docker-in-docker:latest": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {
             "version": "latest",
-            "moby": true // Installs Moby (Docker CE)
-        },
-        // Install Azure CLI if needed for any GCP auth that might leverage it,
-        // or for general cloud interaction. (Optional, but often useful for GCP work)
-        // "ghcr.io/devcontainers/features/azure-cli:1": {},
-        // Install Google Cloud CLI (gcloud) for GCP interactions
-        "ghcr.io/devcontainers/features/google-cloud-cli:latest": {
-            "installAsLatest": true
+            "moby": true
         }
     },
 
     "customizations": {
         "vscode": {
             "settings": {
-                "python.pythonPath": "/usr/local/bin/python", // Or path within the image
+                "python.pythonPath": "/usr/local/bin/python",
                 "python.defaultInterpreterPath": "/usr/local/bin/python",
                 "python.linting.pylintEnabled": true,
                 "python.linting.enabled": true,
-                "python.formatting.provider": "black", // Or "autopep8"
+                "python.formatting.provider": "black",
                 "editor.formatOnSave": true,
-                // Terminal settings for uv
-                "python.terminal.activateEnvironment": false // We'll handle venv activation manually or let uv handle it
+                "python.terminal.activateEnvironment": false
             },
             "extensions": [
-                "ms-python.python",             // Python language support
-                "ms-python.vscode-pylance",     // Enhanced Python IntelliSense
-                "ms-python.pylint",             // Pylint for linting
-                "ms-azuretools.vscode-docker",  // Docker integration
-                "googlecloudtools.cloudcode",   // Google Cloud integration (useful for GCP, includes Minikube, Skaffold)
-                "bierner.markdown-preview-github-styles", // Better Markdown previews
-                "streetsidesoftware.code-spell-checker", // Spell checker
-                "njpwerner.autodocstring",      // Python docstring generator
-                "charliermarsh.ruff"            // Fast Python linter and formatter (alternative/complement to pylint/black)
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-python.pylint",
+                "ms-azuretools.vscode-docker",
+                "googlecloudtools.cloudcode", // Still useful even with manual gcloud install
+                "bierner.markdown-preview-github-styles",
+                "streetsidesoftware.code-spell-checker",
+                "njpwerner.autodocstring",
+                "charliermarsh.ruff"
             ]
         }
     },
 
-    // Use 'postCreateCommand' to run commands after the container is created.
-    // This is where we'll install 'uv' and project dependencies.
-    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends coreutils && pipx install uv && uv venv && . .venv/bin/activate && uv pip install -e .",
-    // Alternatively, if you prefer to run these steps manually after container creation:
-    // "postCreateCommand": "pipx install uv",
+    // Modified postCreateCommand to include gcloud installation
+    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends coreutils apt-transport-https ca-certificates gnupg curl && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && echo 'deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main' | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && sudo apt-get update && sudo apt-get install -y google-cloud-cli && pipx install uv && uv venv && . .venv/bin/activate && uv pip install -e .",
 
-    // Use 'postAttachCommand' to run commands after attaching to the container.
-    // This could be used to activate the venv automatically if not done in postCreate.
-    // "postAttachCommand": {
-    //   "server": "source .venv/bin/activate" // This might not work as expected for new terminals
-    // },
-
-
-    // Forward ports that your application might use.
-    // ADK Dev UI typically uses 8000 and 8008 for the agent server.
     "forwardPorts": [8000, 8008],
-    // If you have other services (e.g., self-hosted LLM for Chapter 10)
-    // "forwardPorts": [8000, 8008, YOUR_SELF_HOSTED_LLM_PORT],
 
-
-    // Set environment variables from a local .env file.
-    // This will load variables from `.devcontainer/.env` or a project root `.env` file
-    // into the container. This is crucial for API keys.
-    // The path is relative to the workspace root.
     "runArgs": [
         "--env-file", "${localWorkspaceFolder}/.env"
-        // Or if you prefer to keep devcontainer specific envs separate:
-        // "--env-file", "${localWorkspaceFolder}/.devcontainer/.env"
     ],
 
-
-    // Mount the workspace folder.
     "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
     "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,consistency=cached",
 
-    // Run as a non-root user (good practice).
-    // The base Python image often creates a 'vscode' or 'node' user.
-    // If using a different base image, you might need to adjust or create a user.
-    "remoteUser": "vscode" // Or "node" if that's the user in the base image.
-                           // If using universal image, 'vscode' is typical.
+    "remoteUser": "vscode"
 }
