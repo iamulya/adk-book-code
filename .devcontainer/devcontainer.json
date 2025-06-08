@@ -3,7 +3,7 @@
     // Choose a base Docker image. A Python 3.12 image is a good start.
     // You can also use a more feature-rich image like mcr.microsoft.com/devcontainers/python:0-3.12
     // or mcr.microsoft.com/devcontainers/universal:2 for more pre-installed tools.
-    "image": "mcr.microsoft.com/devcontainers/python:0-3.12-bullseye",
+    "image": "mcr.microsoft.com/devcontainers/python:3.12-bullseye",
 
     "features": {
         // Install Node.js (for npx in Chapter 8)
