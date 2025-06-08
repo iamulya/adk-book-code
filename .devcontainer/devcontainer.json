@@ -43,9 +43,9 @@
 
     "forwardPorts": [8000, 8008],
 
-    "runArgs": [
-        "--env-file", "${localWorkspaceFolder}/.env"
-    ],
+    // "runArgs": [  // REMOVED THIS SECTION
+    //     "--env-file", "${localWorkspaceFolder}/.env"
+    // ],
 
     "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
     "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,consistency=cached",
