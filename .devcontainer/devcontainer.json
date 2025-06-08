@@ -7,12 +7,12 @@
 
     "features": {
         // Install Node.js (for npx in Chapter 8)
-        "ghcr.io/devcontainers/features/node:1": {
+        "ghcr.io/devcontainers/features/node:latest": {
             "version": "lts" // Or a specific version like "18" or "20"
         },
         // Install Docker-in-Docker (for Chapter 9 ContainerCodeExecutor)
         // This allows you to run Docker commands from within the dev container.
-        "ghcr.io/devcontainers/features/docker-in-docker:2": {
+        "ghcr.io/devcontainers/features/docker-in-docker:latest": {
             "version": "latest",
             "moby": true // Installs Moby (Docker CE)
         },
@@ -20,7 +20,7 @@
         // or for general cloud interaction. (Optional, but often useful for GCP work)
         // "ghcr.io/devcontainers/features/azure-cli:1": {},
         // Install Google Cloud CLI (gcloud) for GCP interactions
-        "ghcr.io/devcontainers/features/google-cloud-cli:1": {
+        "ghcr.io/devcontainers/features/google-cloud-cli:latest": {
             "installAsLatest": true
         }
     },
