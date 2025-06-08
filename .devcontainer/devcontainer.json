@@ -15,25 +15,24 @@
     "customizations": {
         "vscode": {
             "settings": {
-                // Python extension settings
-                "python.defaultInterpreterPath": "/workspaces/${localWorkspaceFolderBasename}/.venv/bin/python",
+                "python.defaultInterpreterPath": "${containerWorkspaceFolder}/.venv/bin/python",
                 "python.linting.pylintEnabled": true,
                 "python.linting.enabled": true,
                 "python.formatting.provider": "black",
                 "editor.formatOnSave": true,
-                // Terminal settings for custom profile activation
-                "python.terminal.activateEnvironment": false, // Disable Python extension's auto-activation
+                "python.terminal.activateEnvironment": false, // Important if using init-file
                 "terminal.integrated.defaultProfile.linux": "adk-venv",
                 "terminal.integrated.profiles.linux": {
-                    "bash": { // Keep the standard bash profile available if needed
+                    "bash": { // Keep a standard bash profile available
                         "path": "/bin/bash",
                         "args": []
                     },
                     "adk-venv": { // Our custom, activated profile
                         "path": "/bin/bash",
-                        // Corrected path for activate script, ensuring it's absolute
-                        "args": ["--init-file", "/workspaces/${localWorkspaceFolderBasename}/.devcontainer/activate_venv.sh"],
-                        "icon": "terminal-python"
+                        // Pass the venv activate script directly to --init-file
+                        // This will be sourced before the interactive prompt appears.
+                        "args": ["--init-file", "${containerWorkspaceFolder}/.venv/bin/activate"],
+                        "icon": "terminal-bash"
                     }
                 }
             },
@@ -51,13 +50,11 @@
         }
     },
 
-    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends coreutils apt-transport-https ca-certificates gnupg curl && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && echo 'deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main' | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && sudo apt-get update && sudo apt-get install -y google-cloud-cli && pipx install uv && cd /workspaces/${localWorkspaceFolderBasename} && uv venv && . .venv/bin/activate && uv pip sync uv.lock && uv pip install --no-deps -e . && echo 'source /workspaces/${localWorkspaceFolderBasename}/.venv/bin/activate' >> ~/.bashrc",
-    // The .bashrc addition is still useful for SSH sessions or shells not launched via VS Code's profile system.
+    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends coreutils apt-transport-https ca-certificates gnupg curl && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && echo 'deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main' | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && sudo apt-get update && sudo apt-get install -y google-cloud-cli && pipx install uv && cd ${containerWorkspaceFolder} && uv venv && . .venv/bin/activate && uv pip sync uv.lock && uv pip install --no-deps -e . && echo \"if [ -f '${containerWorkspaceFolder}/.venv/bin/activate' ]; then source '${containerWorkspaceFolder}/.venv/bin/activate'; fi\" >> ~/.bashrc",
+    // Modified .bashrc line to include a check for activate script existence
 
     "forwardPorts": [8000, 8008],
 
-    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,consistency=cached",
-
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}", // This defines where the project is mounted
     "remoteUser": "vscode"
 }
