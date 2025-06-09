@@ -32,11 +32,11 @@ This method runs a fully configured development environment in the cloud, access
 *   A GitHub account.
 
 **Steps:**
-1.  Navigate to the main page of this repository on GitHub.
-2.  Click the **`< > Code`** button.
-3.  Go to the **Codespaces** tab.
-4.  Click **"Create codespace on main"** (or your current branch). GitHub will prepare the environment based on the `.devcontainer/devcontainer.json` configuration, which may take a few minutes.
-5.  Once the Codespace is ready, it will open in a browser-based VS Code editor. The virtual environment should be automatically activated in the terminal. Proceed to the **[Environment Variable Configuration](#environment-variable-configuration-env-file)** step below.
+
+1.  Click the **`< > Code`** button.
+2.  Go to the **Codespaces** tab.
+3.  Click **"Create codespace on main"** (or your current branch). GitHub will prepare the environment based on the `.devcontainer/devcontainer.json` configuration, which may take a few minutes.
+4.  Once the Codespace is ready, it will open in a browser-based VS Code editor. The virtual environment should be automatically activated in the terminal. Proceed to the **[Environment Variable Configuration](#environment-variable-configuration-env-file)** step below.
 
 ### Option 2: Using a Local Dev Container
 
@@ -94,7 +94,7 @@ Follow these steps if you prefer to configure your local machine manually.
 
 Regardless of which setup option you choose, you must configure your secrets and API keys. These are managed through a `.env` file in the project's root directory (`adk-book-code/.env`).
 
-**Note for Codespaces/Dev Containers Users:** If you are using Option 1 or 2, you should **not** commit your actual `.env` file with secrets. Instead, configure these as **Codespaces Secrets** (Repository Settings > Secrets and variables > Codespaces > New repository secret). The `devcontainer.json` is set up to make these available as environment variables inside the container. For local dev container usage *without* Codespaces secrets, you can create a local `.env` file which will be used if present.
+**Note for Codespaces/Dev Containers Users:** If you are using Option 1 or 2, you should **not** commit your actual `.env` file with secrets. Instead, configure these as **Codespaces Secrets** (Repository Settings > Secrets and variables > Codespaces > New repository secret). The `devcontainer.json` is set up to make these available as environment variables inside the container. For local dev container usage *without* Codespaces secrets, you can create a local `.env` file which will be used if present. Check out the `.env.example` file to find all of the environment variables used in the code.
 
 **Note on Required Keys:** It is not necessary to enter values for all keys mentioned in the `.env.example` file. However, you **must** provide an API key for the LLM you intend to use. By default, examples use Google Gemini.
 *   For **Gemini models via Google AI Studio (Recommended for easy start)**: Set `GOOGLE_API_KEY`.
@@ -141,6 +141,9 @@ OPENAI_API_KEY="sk-YOUR_OPENAI_API_KEY"
 
 # Serper API Key (for CrewAI SerperDevTool example - Chapter 8)
 SERPER_API_KEY="YOUR_SERPER_API_KEY"
+
+# For Chapter 7: Spotify Example (obtain a Bearer token manually via Client Credentials Flow)
+SPOTIFY_BEARER_TOKEN="Bearer YOUR_SPOTIFY_ACCESS_TOKEN_OBTAINED_VIA_CLIENT_CREDENTIALS_FLOW"
 
 # Google OAuth Credentials for ADK (e.g., for Calendar tool - Chapter 7)
 # The redirect URI for local ADK Dev UI usage is typically: http://localhost:8008/oauth_callback
@@ -196,6 +199,6 @@ Once your environment is set up (manually or via a container) and your `.env` fi
         adk web .
         ```
     4.  Open your browser to the URL provided (usually `http://localhost:8000`). If you are in a Codespace, VS Code will typically offer to forward the port automatically, and you can open it in your local browser.
-    5.  In the Dev UI, select the chapter folder (e.g., `chapter7`) from the file explorer on the left. You can then interact with the agent defined as `root_agent` for that chapter.
+    5.  In the Dev UI, select the chapter folder (e.g., `chapter7`) from the agent selector on the top-left. You can then interact with the agent defined as `root_agent` for that chapter.
 
 Happy building with Google ADK!
