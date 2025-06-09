@@ -5,7 +5,7 @@ This repository contains the companion code examples for the book "Building Inte
 ## Prerequisites
 
 *   **Python**: Version 3.12 or higher.
-*   **`uv`**: This project uses `uv` for package management. If you don't have it, install it via pip: `pip install uv`.
+*   **`uv`**: This project uses `uv` for package management. 
 *   **API Keys & Credentials**: You will need to configure API keys and credentials in a `.env` file as described in the setup instructions.
 *   **Docker**: Required for containerized code execution examples (Chapter 9) and for using the Local Dev Container setup option. Ensure Docker Desktop (or Docker Engine) is installed and running.
 *   **Node.js & npx**: Required for the MCP Filesystem server example (Chapter 8).
@@ -64,8 +64,9 @@ Follow these steps if you prefer to configure your local machine manually.
     # .venv\Scripts\activate  # On Windows
     ```
 3.  **Install Dependencies**:
-    Using `uv` (which will read `pyproject.toml`):
+    Using `uv`:
     ```bash
+    uv pip sync uv.lock
     uv pip install -e .
     ```
 4.  Proceed to the **[Environment Variable Configuration](#environment-variable-configuration-env-file)** step below.
@@ -73,6 +74,8 @@ Follow these steps if you prefer to configure your local machine manually.
 ## Environment Variable Configuration (`.env` file)
 
 Regardless of which setup option you choose, you must configure your secrets and API keys in a `.env` file.
+
+**Note** - It is not necessary to enter values for all of the keys mentioned in the .env file. However, you **must** enter your API key for the LLM you will be using, i.e. GOOGLE_API_KEY if using Gemini, OPENAI_API_KEY if using GPT Models or the api key of your favorite LLM model (You might need to consult [LiteLLM docs](https://docs.litellm.ai/docs/providers) to make sure you set the correct environment variable for your LLM key). If you are having trouble using your LLM, check out "Use your favorite LLM" chapter in the book for further instructions.
 
 1.  **Create the `.env` file** in the project's root directory (`adk-book-code/.env`). If you are in a Dev Container or Codespace, you can do this from the terminal:
     ```bash
