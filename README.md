@@ -2,6 +2,22 @@
 
 This repository contains the companion code examples for the book "Building Intelligent Agents using Google's Agent Development Kit (ADK)". Each chapter's code is organized into its respective directory.
 
+## Project Structure
+
+```
+adk-book-code/
+├── .devcontainer/                # Dev Container & Codespaces configuration
+├── pyproject.toml                # Project configuration and dependencies
+├── src/
+│   └── building_intelligent_agents/
+│       ├── __init__.py
+│       ├── utils.py                # Common utilities, env loading, LLM defaults
+│       ├── chapter1/
+│       │   └── __init__.py         # (Un)comment agents to test in Dev UI
+│       └── ...                     # Other chapters
+└── .env                            # (User-created) For API keys and secrets
+```
+
 ## Prerequisites
 
 *   **Python**: Version 3.12 or higher.
@@ -151,21 +167,5 @@ Once your environment is set up (manually or via a container), you can run the e
         ```
     4.  Open your browser to the URL provided (usually `http://localhost:8000`). If you are in a Codespace, VS Code will automatically forward the port.
     5.  In the Dev UI, select the chapter folder (e.g., `chapter7`) from the file explorer on the left. You can then interact with the agent defined as `root_agent` for that chapter.
-
-## Project Structure
-
-```
-adk-book-code/
-├── .devcontainer/                # Dev Container & Codespaces configuration
-├── pyproject.toml                # Project configuration and dependencies
-├── src/
-│   └── building_intelligent_agents/
-│       ├── __init__.py
-│       ├── utils.py                # Common utilities, env loading, LLM defaults
-│       ├── chapter1/
-│       │   └── __init__.py         # (Un)comment agents to test in Dev UI
-│       └── ...                     # Other chapters
-└── .env                            # (User-created) For API keys and secrets
-```
 
 Happy building with Google ADK!
