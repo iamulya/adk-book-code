@@ -15,26 +15,12 @@
     "customizations": {
         "vscode": {
             "settings": {
-                "python.defaultInterpreterPath": "${containerWorkspaceFolder}/.venv/bin/python",
+                "python.defaultInterpreterPath": "/workspaces/${localWorkspaceFolderBasename}/.venv/bin/python",
                 "python.linting.pylintEnabled": true,
                 "python.linting.enabled": true,
                 "python.formatting.provider": "black",
                 "editor.formatOnSave": true,
-                "python.terminal.activateEnvironment": false, // Important if using init-file
-                "terminal.integrated.defaultProfile.linux": "adk-venv",
-                "terminal.integrated.profiles.linux": {
-                    "bash": { // Keep a standard bash profile available
-                        "path": "/bin/bash",
-                        "args": []
-                    },
-                    "adk-venv": { // Our custom, activated profile
-                        "path": "/bin/bash",
-                        // Pass the venv activate script directly to --init-file
-                        // This will be sourced before the interactive prompt appears.
-                        "args": ["--init-file", "${containerWorkspaceFolder}/.venv/bin/activate"],
-                        "icon": "terminal-bash"
-                    }
-                }
+                "python.terminal.activateEnvironment": false // We handle activation via .bashrc
             },
             "extensions": [
                 "ms-python.python",
@@ -50,11 +36,12 @@
         }
     },
 
-    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends coreutils apt-transport-https ca-certificates gnupg curl && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && echo 'deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main' | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && sudo apt-get update && sudo apt-get install -y google-cloud-cli && pipx install uv && cd ${containerWorkspaceFolder} && uv venv && . .venv/bin/activate && uv pip sync uv.lock && uv pip install --no-deps -e . && echo \"if [ -f '${containerWorkspaceFolder}/.venv/bin/activate' ]; then source '${containerWorkspaceFolder}/.venv/bin/activate'; fi\" >> ~/.bashrc",
-    // Modified .bashrc line to include a check for activate script existence
+    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends coreutils apt-transport-https ca-certificates gnupg curl && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && echo 'deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main' | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && sudo apt-get update && sudo apt-get install -y google-cloud-cli && pipx install uv && cd /workspaces/${localWorkspaceFolderBasename} && uv venv && echo 'source /workspaces/${localWorkspaceFolderBasename}/.venv/bin/activate' >> ~/.bashrc && . .venv/bin/activate && uv pip sync uv.lock && uv pip install -e .",
 
     "forwardPorts": [8000, 8008],
 
-    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}", // This defines where the project is mounted
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind,consistency=cached",
+
     "remoteUser": "vscode"
 }
