@@ -57,6 +57,10 @@ This method uses VS Code and Docker on your local machine to create the same con
 3.  **Reopen in Container**: A notification will usually appear in the bottom-right corner asking if you want to "Reopen in Container". Click it. If not, open the Command Palette (`Cmd+Shift+P` or `Ctrl+Shift+P`) and type "Dev Containers: Rebuild and Reopen in Container" or "Dev Containers: Reopen in Container". VS Code will build the container based on the `.devcontainer/devcontainer.json` configuration.
 4.  Once the container is running, the virtual environment should be automatically activated in the terminal. Proceed to the **[Environment Variable Configuration](#environment-variable-configuration-env-file)** step below.
 
+> [!IMPORTANT]  
+> ## For Option 1 and Option 2 users
+> When the setup is done for the *first time*, it might not have the Python virtual environment activated in the terminal open by default. Simply open a new terminal - there you should have the virtual environment automatically activated, verifiable by the presence of `(adk-book-code)` in your prompt. 
+
 ### Option 3: Manual Local Setup
 
 Follow these steps if you prefer to configure your local machine manually.
