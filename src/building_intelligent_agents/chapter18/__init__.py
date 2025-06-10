@@ -1,2 +1,3 @@
-#from .in_memory_service_demo import memory_interactive_agent as root_agent
-#from .memory_tools_agent import smart_planner_agent as root_agent
+#from .in_memory_artifact_demo import artifact_agent as root_agent
+#from .load_artifacts_tool_demo import artifact_viewer_agent as root_agent
+#from .user_upload_as_artifact import upload_processor_agent as root_agent
