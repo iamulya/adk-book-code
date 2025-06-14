@@ -41,7 +41,7 @@ if DATA_STORE_ID:
         else:
             runner = InMemoryRunner(agent=llm_knowledge_agent, app_name="LlmKnowledgeApp")
             session_id = "s_llm_knowledge"
-            user_id = "emp123"
+            user_id = "llm_user"
             create_session(runner, session_id, user_id)
 
             prompt = "What is double descent phenomenon"
